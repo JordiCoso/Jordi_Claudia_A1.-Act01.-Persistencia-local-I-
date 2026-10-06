@@ -20,16 +20,27 @@ class FirstRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('First Route')),
       body: Center(
-        child: ElevatedButton(
-          child: const Text('Open route'),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute<void>(
-                builder: (context) => const SecondRoute(),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Escribe tu nombre',
               ),
-            );
-          },
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Open route'),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (context) => const SecondRoute(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -48,9 +59,7 @@ class SecondRoute extends StatelessWidget {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute<void>(
-                builder: (context) => const FirstRoute(),
-              ),
+              MaterialPageRoute<void>(builder: (context) => const FirstRoute()),
             );
           },
           child: const Text('Go back!'),
