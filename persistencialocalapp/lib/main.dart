@@ -8,12 +8,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctxt) {
-    return MaterialApp(home: FirstRoute());
+    return MaterialApp(home: Bienvenida());
   }
 }
 
-class FirstRoute extends StatelessWidget {
-  const FirstRoute({super.key});
+class Bienvenida extends StatelessWidget {
+  const Bienvenida({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class FirstRoute extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (context) => const SecondRoute(),
+                    builder: (context) => const PantallaPrincipal(),
                   ),
                 );
               },
@@ -47,8 +47,8 @@ class FirstRoute extends StatelessWidget {
   }
 }
 
-class SecondRoute extends StatelessWidget {
-  const SecondRoute({super.key});
+class PantallaPrincipal extends StatelessWidget {
+  const PantallaPrincipal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class SecondRoute extends StatelessWidget {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute<void>(builder: (context) => const FirstRoute()),
+              MaterialPageRoute<void>(builder: (context) => const Bienvenida()),
             );
           },
           child: const Text('Go back!'),
