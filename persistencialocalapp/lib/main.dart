@@ -1,4 +1,9 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:persistencialocalapp/screens/bienvenida.dart';
+import 'package:persistencialocalapp/screens/principal.dart';
+import 'package:persistencialocalapp/services/PreferenciasService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
@@ -8,63 +13,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctxt) {
-    return MaterialApp(home: Bienvenida());
+    return MaterialApp(home: ComprobarInicio());
   }
 }
 
-class Bienvenida extends StatelessWidget {
-  const Bienvenida({super.key});
+Widget ComprobarInicio() {
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('First Route')),
-      body: Center(
-        child: Column(
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Escribe tu nombre',
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              child: const Text('Open route'),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => const PantallaPrincipal(),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+  bool primerInicio = false;
+  PreferenciasService hola = new PreferenciasService();
 
-class PantallaPrincipal extends StatelessWidget {
-  const PantallaPrincipal({super.key});
+  return primerInicio ? Bienvenida() : Principal();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Second Route')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute<void>(builder: (context) => const Bienvenida()),
-            );
-          },
-          child: const Text('Go back!'),
-        ),
-      ),
-    );
-  }
 }
