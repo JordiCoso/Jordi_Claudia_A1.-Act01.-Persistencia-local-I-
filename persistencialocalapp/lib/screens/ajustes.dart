@@ -4,14 +4,13 @@ class PantallaAjustes extends StatefulWidget {
   const PantallaAjustes({super.key});
 
   @override
-  State<PantallaAjustes> createState()
-  return _PantallaAjustesState(); //creo el estado de la pantalla.
+  State<PantallaAjustes> createState() => _PantallaAjustesState(); //creo el estado de la pantalla.
 }
 
 class _PantallaAjustesState extends State<PantallaAjustes> {
   bool _temaOscuro = false;
   bool _ocultarCompletado = false;
-  int _tamanoLetra = 14;
+  double _tamanoLetra = 14;
 
   void _cambiarTemaOscuro(bool nuevoTema) { //cambia el tema.
     setState(() {
@@ -19,7 +18,7 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
     });
   }
 
-  void _cambiarTamanoLetra(bool nuevoTamano) { //cambia el tamaño de la letra.
+  void _cambiarTamanoLetra(double nuevoTamano) { //cambia el tamaño de la letra.
     setState(() {
       _tamanoLetra = nuevoTamano;
     });
@@ -41,7 +40,7 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
         padding: EdgeInsets.all(24),
 
         child: Column(
-          childer: [
+          children: [
             Text('Configuración',
             style: TextStyle(
               fontSize: 20,
@@ -65,6 +64,7 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
               min: 10,
               max: 26,
               divisions: 16, //divide el intervalo de la barra en 16.
+              onChanged: _cambiarTamanoLetra,
             ),
 
             SizedBox(height: 24),
@@ -76,10 +76,11 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
 
             SizedBox(height: 24),
 
-            SwitchListFile(
-              title: Text('Hábito completado por hoy.'),
+            SwitchListTile(
+              title: Text('Hábito completado por hoy.',
+              ),
               value: _ocultarCompletado,
-              onChanged: _nuevoHabitoCompletado,
+              onChanged: _cambiarOcultarCompletado,
             ),
           ],
         ),

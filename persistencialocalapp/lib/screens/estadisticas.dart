@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class PantallaEstadisticas extends StatelessWidget {
+class PantallaEstadisticas extends StatefulWidget {
   const PantallaEstadisticas({super.key});
+
+  @override
+  State<PantallaEstadisticas> createState() => _PantallaEstadisticas();
+
+}
+
+  class _PantallaEstadisticas extends State<PantallaEstadisticas> {
+
+  static DateTime ahora = DateTime.now();
+  static DateFormat formato = DateFormat('dd-mm-yyyy HH:mm:ss'); //definimos el formato de fecha y hora.
+
+  String fechaParaGuardar = formato.format(ahora);
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +27,10 @@ class PantallaEstadisticas extends StatelessWidget {
         padding: EdgeInsets.all(24),
 
         child: Column(
-          childer: [
+          children: [
             Text('Estadísticas de los hábitos.',
             style: TextStyle(
-              fontsize: 24,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
             ),
@@ -40,7 +53,7 @@ class PantallaEstadisticas extends StatelessWidget {
 
             SizedBox(height: 16),
 
-            Text('Última apertura de la aplicación'), //TODO
+            Text('Última apertura de la aplicación: ' + fechaParaGuardar),
           ],
         ),
       ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:persistencialocalapp/screens/ajustes.dart';
+import 'package:persistencialocalapp/screens/estadisticas.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
