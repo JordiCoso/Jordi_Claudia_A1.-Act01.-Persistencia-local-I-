@@ -1,15 +1,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenciasService {
-  late SharedPreferences _sharedPreferences;
 
-  factory PreferenciasService() { // TODO
-    return CreateInstancePreferences();
+  SharedPreferences? _sharedPreferences = null;
+
+  void Instanciar() async {
+    _sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  void CreateInstancePreferences() async {
-    _sharedPreferences = await SharedPreferences.getInstance();
-    print(await _sharedPreferences);
+  Future<SharedPreferences> GetPreferences() async {
+    return SharedPreferences.getInstance();
   }
 
 }
