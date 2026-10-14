@@ -1,10 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenciasService {
-  // variable de clase para no tener que llamar cada vez a GetInstance().
+  // Variable de clase para no tener que llamar cada vez a getInstance().
   late SharedPreferences _preferencias;
 
-  //Especifico un constructor privado para que no se pueda llamar a new.
+  // Especifico un constructor privado para que no se pueda llamar a new.
   PreferenciasService._crear() {}
 
   /*
@@ -28,7 +28,11 @@ class PreferenciasService {
     return inicializando;
   }
 
-  SharedPreferences getPreferencias() {
-    return _preferencias;
+  bool? getPrimerInicio() {
+    return _preferencias.getBool("primerInicio");
+  }
+
+  void setPrimerInicio(bool valor) {
+    _preferencias.setBool("primerInicio", valor);
   }
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/bienvenida.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:persistencialocalapp/services/PreferenciasService.dart';
 
 class Principal extends StatelessWidget {
-  final SharedPreferences _preferencias;
-  const Principal({super.key, required this._preferencias});
+  final PreferenciasService _preferenciasService;
+  const Principal({super.key, required this._preferenciasService});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class Principal extends StatelessWidget {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute<void>(builder: (context) => Bienvenida(preferencias: _preferencias,)),
+              MaterialPageRoute<void>(builder: (context) => Bienvenida(preferenciasService: _preferenciasService)),
             );
           },
           child: const Text('Go back!'),
