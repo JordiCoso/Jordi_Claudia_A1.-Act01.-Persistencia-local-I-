@@ -3,7 +3,8 @@ import 'package:persistencialocalapp/screens/bienvenida.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Principal extends StatelessWidget {
-  const Principal({super.key});
+  final SharedPreferences _preferencias;
+  const Principal({super.key, required this._preferencias});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class Principal extends StatelessWidget {
           onPressed: () {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute<void>(builder: (context) => const Bienvenida()),
+              MaterialPageRoute<void>(builder: (context) => Bienvenida(preferencias: _preferencias,)),
             );
           },
           child: const Text('Go back!'),
