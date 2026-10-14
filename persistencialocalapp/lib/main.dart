@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/ajustes.dart';
 import 'package:persistencialocalapp/screens/estadisticas.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
 
