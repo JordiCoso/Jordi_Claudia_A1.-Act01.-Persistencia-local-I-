@@ -1,3 +1,4 @@
+import 'package:persistencialocalapp/models/usuario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenciasService {
@@ -5,7 +6,7 @@ class PreferenciasService {
   late SharedPreferences _preferencias;
 
   // Especifico un constructor privado para que no se pueda llamar a new.
-  PreferenciasService._crear() {}
+  PreferenciasService._crear();
 
   /*
   * Constructor publico, usa el privado para obtener el objeto donde luego
@@ -21,11 +22,11 @@ class PreferenciasService {
   */
 
   static Future<PreferenciasService> crear() async {
-    var inicializando = PreferenciasService._crear();
+    var _inicializando = PreferenciasService._crear();
 
-    inicializando._preferencias = await SharedPreferences.getInstance();
+    _inicializando._preferencias = await SharedPreferences.getInstance();
 
-    return inicializando;
+    return _inicializando;
   }
 
   bool? getPrimerInicio() {
@@ -34,5 +35,18 @@ class PreferenciasService {
 
   void setPrimerInicio(bool valor) {
     _preferencias.setBool("primerInicio", valor);
+  }
+
+  void guardarUsuario(Usuario usuario) {
+    _preferencias.setString("usuario", usuario.nombre);
+    _preferencias.setInt("numeroHabitos", usuario.numeroHabitos);
+  }
+
+  Usuario cargarUsuario() {
+    String _nombre = _preferencias.getString("usuario") ?? '';
+    int _numeroHabitos = _preferencias.getInt("numeroHabitos") ?? 0;
+    Usuario _usuario = new Usuario(nombre: _nombre, numeroHabitos: _numeroHabitos);
+
+    return _usuario;
   }
 }

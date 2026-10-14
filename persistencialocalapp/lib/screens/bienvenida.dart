@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:persistencialocalapp/models/usuario.dart';
 import 'package:persistencialocalapp/screens/principal.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
 
 class Bienvenida extends StatefulWidget {
@@ -15,8 +15,8 @@ class Bienvenida extends StatefulWidget {
 }
 
 class _BienvenidaState extends State<Bienvenida> {
-  final _nombreController = TextEditingController(text: 'Alex');
-  final _numeroController = TextEditingController(text: '0');
+  final _nombreController = TextEditingController();
+  final _numeroController = TextEditingController();
 
   @override
   void dispose() {
@@ -34,26 +34,30 @@ class _BienvenidaState extends State<Bienvenida> {
       body: Center(
         child: Column(
           children: [
+            SizedBox(height: 20),
             TextField(
               onChanged: _validarInput,
               controller: _nombreController,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                labelText: 'Nombre',
                 hintText: 'Escribe tu nombre',
+                border: OutlineInputBorder(),
               ),
             ),
+            SizedBox(height: 20),
             TextField(
               onChanged: _validarInput,
               controller: _numeroController,
               decoration: InputDecoration(
-                border: OutlineInputBorder(),
+                labelText: 'Numero habitos',
                 hintText: 'Escribe numero de hàbitos diarios',
+                border: OutlineInputBorder(),
               ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              child: const Text('Open route'),
               onPressed: _validoAvanzar ? _botonContinuar : null,
+              child: const Text('Iniciar'),
             ),
           ],
         ),
@@ -62,11 +66,19 @@ class _BienvenidaState extends State<Bienvenida> {
   }
 
   void _botonContinuar() {
+
+    String _nombre = _nombreController.text.trim();
+    int _numberoHabitos = int.parse(_numeroController.text.trim());
+
+    final Usuario _usuario = new Usuario(nombre: _nombre, numeroHabitos: _numberoHabitos);
+
+    widget._preferenciasService.guardarUsuario(_usuario);
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute<void>(
         builder: (context) =>
-            Principal(preferenciasService: widget._preferenciasService),
+            Principal(preferenciasService: widget._preferenciasService, usuario: _usuario),
       ),
     );
   }

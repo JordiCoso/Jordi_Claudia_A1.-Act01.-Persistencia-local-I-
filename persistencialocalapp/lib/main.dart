@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/bienvenida.dart';
 import 'package:persistencialocalapp/screens/principal.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import 'models/usuario.dart';
 
 void main() async {
   PreferenciasService _preferenciasService = await PreferenciasService.crear();
@@ -22,8 +23,8 @@ class MyApp extends StatelessWidget {
 }
 
 Widget comprobarInicio(PreferenciasService _preferenciasService) {
-  bool primerInicio = _preferenciasService.getPrimerInicio() ?? true;
-  return primerInicio
+  Usuario _usuario = _preferenciasService.cargarUsuario();
+  return (_usuario.nombre == '' || _usuario.numeroHabitos == 0)
       ? Bienvenida(preferenciasService: _preferenciasService)
-      : Principal(preferenciasService: _preferenciasService);
+      : Principal(preferenciasService: _preferenciasService, usuario: _usuario);
 }

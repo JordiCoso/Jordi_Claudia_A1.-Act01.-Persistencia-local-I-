@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/bienvenida.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
+
+import '../models/usuario.dart';
 
 class Principal extends StatelessWidget {
   final PreferenciasService _preferenciasService;
-  const Principal({super.key, required this._preferenciasService});
+  final Usuario _usuario;
+  const Principal({super.key, required this._preferenciasService, required this._usuario});
 
   @override
   Widget build(BuildContext context) {
