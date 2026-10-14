@@ -5,9 +5,9 @@ import 'package:persistencialocalapp/services/PreferenciasService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  PreferenciasService hola = new PreferenciasService();
+  PreferenciasService hola = await PreferenciasService.crear();
 
-  runApp(MyApp(preferencias: await hola.GetPreferences()));
+  runApp(MyApp(preferencias: hola.getPreferencias()));
 }
 
 class MyApp extends StatelessWidget {
@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext ctxt) {
-    return MaterialApp(home: ComprobarInicio(this._preferencias));
+    return MaterialApp(home: comprobarInicio(this._preferencias));
   }
 }
 
-Widget ComprobarInicio(SharedPreferences preferencias) {
+Widget comprobarInicio(SharedPreferences preferencias) {
   bool primerInicio = preferencias.getBool("primerInicio") ?? true;
   return primerInicio
       ? Bienvenida(preferencias: preferencias)
