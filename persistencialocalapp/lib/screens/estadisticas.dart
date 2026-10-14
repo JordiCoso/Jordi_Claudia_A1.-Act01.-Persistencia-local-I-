@@ -3,18 +3,15 @@ import 'package:intl/intl.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
 
 class PantallaEstadisticas extends StatefulWidget {
-  const PantallaEstadisticas({super.key});
+  final PreferenciasService _preferenciasService;
+
+  const PantallaEstadisticas({super.key, required this._preferenciasService});
 
   @override
   State<PantallaEstadisticas> createState() => _PantallaEstadisticas();
-
 }
 
 class _PantallaEstadisticas extends State<PantallaEstadisticas> {
-
-  //creo un objeto para poder utilizar los métodos creados en PrefernciasService.
-  PreferenciasService preferencias = new PreferenciasService();
-
   //creo una variable con el texto que aparece mientras de intenta recuperar la última fecha.
   String ultimaApertura = 'Cargando...';
 
@@ -29,18 +26,17 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
   void initState() {
     super.initState();
 
-    cargarUltimaApertura();
-    cargarNumeroAperturas();
+    cargarUltimaApertura(widget._preferenciasService);
+    cargarNumeroAperturas(widget._preferenciasService);
   }
 
   //creamos un método para poder recuperar la última apertuda de la aplicación.
-  Future<void> cargarUltimaApertura() async {
-
+  void cargarUltimaApertura(PreferenciasService _preferenciasService) {
     //recuperamos la fecha utilizando lo creado anteriormente en Preferencias.
-    String? fecha = await preferencias.obtenerUltimaApertura();
+    String? fecha = _preferenciasService.obtenerUltimaApertura();
 
     //comprobamos que la pantalla sigue abierta con el mounted.
-    if(!mounted) {
+    if (!mounted) {
       return;
     }
 
@@ -51,13 +47,12 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
   }
 
   //recuperamos el número de aperturas guardado.
-  Future<void> cargarNumeroAperturas() async {
-
+  void cargarNumeroAperturas(PreferenciasService _preferenciasService) {
     //cogemos el contador creado en PreferenciasService.
-    int numero = await preferencias.obtenerNumeroAperturas();
+    int numero = _preferenciasService.obtenerNumeroAperturas();
 
     //comprobamos que la pantalla sigue abierta con el mounted.
-    if(!mounted) {
+    if (!mounted) {
       return;
     }
 
@@ -70,19 +65,16 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Estadísticas'),
-      ),
+      appBar: AppBar(title: Text('Estadísticas')),
 
       body: SingleChildScrollView(
         padding: EdgeInsets.all(24),
 
         child: Column(
           children: [
-            Text('Estadísticas de los hábitos.',
-              style: TextStyle(fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            Text(
+              'Estadísticas de los hábitos.',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
             SizedBox(height: 16),
@@ -92,9 +84,9 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
             SizedBox(height: 24),
 
-            Text('Estadísticas de la aplicación',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,
-            ),
+            Text(
+              'Estadísticas de la aplicación',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
 
             SizedBox(height: 16),

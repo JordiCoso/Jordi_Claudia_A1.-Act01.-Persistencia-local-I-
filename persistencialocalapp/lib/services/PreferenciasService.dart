@@ -37,52 +37,52 @@ class PreferenciasService {
   static const String nombreDatoFecha = 'ultimaApertura';
 
   //creamos método para guardar la fecha de apertura.
-  Future<void> guardarUltimaApertura(String fecha) async { //es void porque el método no devuelve ningún valor.
+  void guardarUltimaApertura(String fecha) { //es void porque el método no devuelve ningún valor.
 
     //obtenemos el acceso a las preferencias guardadas.
-    final prefs = await SharedPreferences.getInstance(); //usamos .getInstance() para obtener los datos guardados de las preferencias.
+    final prefs = _preferencias; //usamos .getInstance() para obtener los datos guardados de las preferencias.
 
     //guardamos la fecha como string.
-    await prefs.setString(nombreDatoFecha, fecha);
+    prefs.setString(nombreDatoFecha, fecha);
   }
 
   //recuperamos la fecha guardada.
-  Future<String?> obtenerUltimaApertura() async {
+  String? obtenerUltimaApertura() {
 
     //obtenemos el acceso a las preferencias guardadas.
-    final prefs = await SharedPreferences.getInstance();
+    final prefs = _preferencias.getString("obtenerUltimaApertura");
   }
 
 //creamos la variable con el nombre para guardar el número de aperturas.
   static const String nombreDatoAperturas = 'numeroAperturas';
 
   //creamos método para guardar el número de aperturas.
-  Future<void> guardarNumeroAperturas(int numero) async {
-    final prefs = await SharedPreferences.getInstance();
+  void guardarNumeroAperturas(int numero) {
+    final prefs = _preferencias;
 
-    await prefs.setInt(nombreDatoAperturas, numero);
+    prefs.setInt(nombreDatoAperturas, numero);
   }
 
 //recuperamos el número de aperturas.
-  Future<int> obtenerNumeroAperturas() async {
-    final prefs = await SharedPreferences.getInstance();
+  int obtenerNumeroAperturas() {
+    final prefs = _preferencias;
     return prefs.getInt(nombreDatoAperturas) ?? 0;
   }
 
-  Future<void> aumentarNumeroAperturar() async {
+  void aumentarNumeroAperturar() {
 
     //recuperamos el número guardado.
-    int aperturas = await obtenerNumeroAperturas();
+    int aperturas = obtenerNumeroAperturas();
 
     //sumamos apertura cuando se abra.
     aperturas += 1;
 
     //guardamos el nuvo número de aperturas.
-    await guardarNumeroAperturas(aperturas);
+    guardarNumeroAperturas(aperturas);
   }
 
   //registramos la fecha actual.
-Future<void> registrarApertura() async {
+void registrarApertura() {
 
     //obtenemos la fehca y hora actuales.
   DateTime ahora = DateTime.now();
@@ -94,6 +94,6 @@ Future<void> registrarApertura() async {
   String fecha = formato.format(ahora);
 
   //usamos el método anterior para guardar la fecha.
-  await guardarUltimaApertura(fecha);
+  guardarUltimaApertura(fecha);
 }
 }

@@ -10,31 +10,33 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //creamos un objeto de nuestro servicio.
-  PreferenciasService preferencias = new PreferenciasService();
+  PreferenciasService _preferenciasService = await PreferenciasService.crear();
 
   //aumentamos el número de aperturas.
-  await preferencias.aumentarNumeroAperturar();
+  _preferenciasService.aumentarNumeroAperturar();
 
   //guardamos la fecha de apertura.
-  await preferencias.registrarApertura();
+  _preferenciasService.registrarApertura();
 
-  runApp(const MyApp());
+  runApp(MyApp(preferenciasService: _preferenciasService));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final PreferenciasService _preferenciasService;
+  const MyApp({super.key, required this._preferenciasService});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(title: 'HabitosApp',
-      home: const PantallaInicio(),
+      home: PantallaInicio(preferenciasService: _preferenciasService,),
     );
   }
 }
 
 //pantalla principal de prueba.
 class PantallaInicio extends StatelessWidget {
-  const PantallaInicio({super.key});
+  final PreferenciasService _preferenciasService;
+  const PantallaInicio({super.key, required this._preferenciasService});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +51,11 @@ class PantallaInicio extends StatelessWidget {
 
             //botón para estadísticas.
             ElevatedButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaEstadisticas(),
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaEstadisticas(preferenciasService: _preferenciasService,),
               ),
               );
             },
-              child: Text('Estadísticas.'),
+              child: Text('Estadísticas'),
             ),
 
             SizedBox(height: 24),

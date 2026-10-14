@@ -51,7 +51,7 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
             SizedBox(height: 24),
 
             SwitchListTile( //hacemos el interrumptor para el modo oscuro.
-            title: Text('Modo oscuro.'),
+            title: Text('Modo oscuro'),
               value: _temaOscuro,
               onChanged: _cambiarTemaOscuro,
             ),
@@ -77,7 +77,7 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
             SizedBox(height: 24),
 
             SwitchListTile(
-              title: Text('Hábito completado por hoy.',
+              title: Text('Hábito completado por hoy',
               ),
               value: _ocultarCompletado,
               onChanged: _cambiarOcultarCompletado,
