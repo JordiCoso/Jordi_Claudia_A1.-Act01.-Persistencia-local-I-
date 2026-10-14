@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
 }
 
 Widget ComprobarInicio(SharedPreferences preferencias) {
-  bool primerInicio = false;
-  print(preferencias.toString());
-  return primerInicio ? Bienvenida() : Principal();
+  bool primerInicio = preferencias.getBool("primerInicio") ?? true;
+  return primerInicio
+      ? Bienvenida(preferencias: preferencias)
+      : Principal(preferencias: preferencias);
 }

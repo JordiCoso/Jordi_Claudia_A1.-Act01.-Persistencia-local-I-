@@ -3,7 +3,9 @@ import 'package:persistencialocalapp/screens/principal.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Bienvenida extends StatelessWidget {
-  const Bienvenida({super.key});
+  final SharedPreferences _preferencias;
+
+  const Bienvenida({super.key, required this._preferencias});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +24,12 @@ class Bienvenida extends StatelessWidget {
             ElevatedButton(
               child: const Text('Open route'),
               onPressed: () {
+                _preferencias.setBool("primerInicio", false);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (context) => const Principal(),
+                    builder: (context) =>
+                        Principal(preferencias: _preferencias),
                   ),
                 );
               },
