@@ -1,27 +1,28 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/bienvenida.dart';
 import 'package:persistencialocalapp/screens/principal.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  PreferenciasService hola = new PreferenciasService();
+
+  runApp(MyApp(preferencias: await hola.GetPreferences()));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences _preferencias;
+
+  const MyApp({super.key, required this._preferencias});
 
   @override
   Widget build(BuildContext ctxt) {
-    return MaterialApp(home: ComprobarInicio());
+    return MaterialApp(home: ComprobarInicio(this._preferencias));
   }
 }
 
-Widget ComprobarInicio() {
-
+Widget ComprobarInicio(SharedPreferences preferencias) {
   bool primerInicio = false;
-  PreferenciasService hola = new PreferenciasService();
-
+  print(preferencias.toString());
   return primerInicio ? Bienvenida() : Principal();
-
 }
