@@ -38,17 +38,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  //variable que indica si está activado el modo oscuro.
-  bool _temaOscuro = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    //recuperamos el modo oscuro que había guardado el usuario.
-    _temaOscuro = widget._preferenciasService.obtenerTemaOscuro();
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -88,8 +77,8 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
 
-      //seleccionamos el tema según las preferencias guardadas.
-      themeMode: _temaOscuro ? ThemeMode.dark : ThemeMode.light,
+      //seleccionamos el tema guardado.
+      themeMode: temaOscuro ? ThemeMode.dark : ThemeMode.light,
 
       //comprobamos si el usuario ya se ha registrado.
       home: comprobarInicio(widget._preferenciasService),
