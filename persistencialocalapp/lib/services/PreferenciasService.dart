@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
 class PreferenciasService {
   // variable de clase para no tener que llamar cada vez a GetInstance().
@@ -25,6 +26,9 @@ class PreferenciasService {
     var inicializando = PreferenciasService._crear();
 
     inicializando._preferencias = await SharedPreferences.getInstance();
+
+    //se recupera el tema guardado cuando se inicia la app.
+    inicializando.temaOscuro.value = inicializando.obtenerTemaOscuro();
 
     return inicializando;
   }
@@ -100,8 +104,9 @@ void registrarApertura() {
   static const String nombreDatoTema = 'temaOscuro';
 
   //guardamos si el modo oscuro está activado o no.
-  void guardarTemaOscuro(bool temaOscuro) {
-    _preferencias.setBool(nombreDatoTema, temaOscuro);
+  void guardarTemaOscuro(bool nuevoTema) {
+    _preferencias.setBool(nombreDatoTema, nuevoTema); //guardamos el valor en sharedpreferences.
+    temaOscuro.value = nuevoTema; //se avisa a las pantallas de que se ha cambiado el tema.
   }
 
   //recuperamos el modo oscuro guardado.
@@ -140,4 +145,7 @@ void registrarApertura() {
     //esperamos a que se eleminen los datos guardados en SharedPreferences.
     await _preferencias.clear();
   }
+
+  //guarda el modo oscuro y avisa cuando cambia.
+  ValueNotifier<bool> temaOscuro = ValueNotifier<bool>(false);
 }
