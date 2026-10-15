@@ -5,7 +5,7 @@ import 'package:persistencialocalapp/services/PreferenciasService.dart';
 class PantallaAjustes extends StatefulWidget {
   //recibimos el preferenciasService.
   final PreferenciasService preferenciasService;
-  
+
   const PantallaAjustes({super.key, required this.preferenciasService,});
 
   @override
@@ -40,7 +40,7 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
       _tamanoLetra = nuevoTamano;
     });
 
-    widget.preferenciasService.guardarTamanoLetra(nuevoTemano); //guardamos el tamaño.
+    widget.preferenciasService.guardarTamanoLetra(nuevoTamano); //guardamos el tamaño.
   }
 
   void _cambiarOcultarCompletado(bool nuevoHabitoCompletado) { //cambia la opción de ocultar hábitos.
@@ -64,227 +64,229 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            Text('Ajustes de personalización',
-                 style: TextStyle(
-                   fontSize: 24,
-                   fontWeight: FontWeight.bold,
-                   ),
-                 ),
-            SizedBox(height: 8),
-            
-            Text('Configuración',
+          Text('Ajustes de personalización',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 8),
+
+        Text('Configuración',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+
+        //tarjeta de apariencia.
+        Container(
+          padding: EdgeInsets.all(16),
+
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+          ),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              //título de la sección
+              Row(
+                children: [
+                  Icon(
+                    Icons.palette,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+
+                  SizedBox(width: 8),
+
+                  Text(
+                    'Apariencia',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+
+              Divider(),
+
+              //interruptor del modo oscuro.
+              SwitchListTile(
+                title: Text('Modo oscuro'),
+                subtitle: Text('Cambia a modo oscuro o modo claro'),
+                value: _temaOscuro,
+                onChanged: _cambiarTemaOscuro,
+              ),
+
+              Divider(),
+
+              Text('Tamaño de letra: ${_tamanoLetra.round()}',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+
+              //barra para seleccionar el tamaño de letra.
+              Slider(
+                value: _tamanoLetra,
+                min: 10,
+                max: 26,
+                divisions: 16,
+                onChanged: _cambiarTamanoLetra,
+              ),
+
+              //texto de ejemplo con el tamaño seleccionado.
+              Text('Así se verá el tamaño de la letra.',
+                style: TextStyle(fontSize: _tamanoLetra),
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 20),
+
+        //tarjeta de configuración de hábitos.
+        Container(
+          padding: EdgeInsets.all(16),
+
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+          ),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.check_circle_outline,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+
+                  SizedBox(width: 8),
+
+                  Text(
+                    'Hábitos',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+
+              Divider(),
+
+              //interruptor para ocultar hábitos completados.
+              SwitchListTile(
+                title: Text('Ocultar completados'),
+                subtitle: Text('Ocultar los hábitos terminados'),
+                value: _ocultarCompletado,
+                onChanged: _cambiarOcultarCompletado,
+              ),
+            ],
+          ),
+        ),
+
+        SizedBox(height: 20),
+
+        //tarjeta para borrar los datos.
+        Container(
+          padding: EdgeInsets.all(16),
+
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: BorderRadius.circular(16),
+          ),
+
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+          Row(
+          children: [
+          Icon(
+          Icons.delete_outline,
+            color: Colors.red,
+          ),
+
+          SizedBox(width: 8),
+
+          Text('Datos de la aplicación',
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
-            ),
-
-            //tarjeta de apariencia.
-            Container(
-              padding: EdgeInsets.all(16),
-
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-              ),
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  //título de la sección
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.palette,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-
-                      SizedBox(width: 8),
-
-                      Text(
-                        'Apariencia',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Divider(),
-
-                  //interruptor del modo oscuro.
-                  SwitchListTile(
-                    title: Text('Modo oscuro'),
-                    subtitle: Text('Cambia a modo oscuro o modo claro'),
-                    value: _temaOscuro,
-                    onChanged: _cambiarTemaOscuro,
-                  ),
-
-                  Divider(),
-
-                  Text('Tamaño de letra: ${_tamanoLetra.round()}',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-
-                  //barra para seleccionar el tamaño de letra.
-                  Slider(
-                    value: _tamanoLetra,
-                    min: 10,
-                    max: 26,
-                    divisions: 16,
-                    onChanged: _cambiarTamanoLetra,
-                  ),
-
-                  //texto de ejemplo con el tamaño seleccionado.
-                  Text('Así se verá el tamaño de la letra.',
-                    style: TextStyle(fontSize: _tamanoLetra),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            //tarjeta de configuración de hábitos.
-            Container(
-              padding: EdgeInsets.all(16),
-
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-              ),
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle_outline,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-
-                      SizedBox(width: 8),
-
-                      Text(
-                        'Hábitos',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Divider(),
-
-                  //interruptor para ocultar hábitos completados.
-                  SwitchListTile(
-                    title: Text('Ocultar completados'),
-                    subtitle: Text('Ocultar los hábitos terminados'),
-                    value: _ocultarCompletado,
-                    onChanged: _cambiarOcultarCompletado,
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 20),
-
-            //tarjeta para borrar los datos.
-            Container(
-              padding: EdgeInsets.all(16),
-
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.circular(16),
-              ),
-
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.delete_outline,
-                        color: Colors.red,
-                      ),
-
-                      SizedBox(width: 8),
-
-                      Text('Datos de la aplicación',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-
-            //botón para borrar todos los datos de la aplicación.
-            ElevatedButton(
-              onPressed: () async {
-                //mostraremos una confirmación para borrar los datos.
-                bool? confirmar = await showDialog<bool>( //showDialog muestra una ventana encima de la pantalla.
-                  context: context, 
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text('¿Borrar todos los datos?'),
-
-                      content: Text('Se eliminarán todos los datos guardados, esta acción no se puede deshacer.',
-                                    ),
-                      actions: [
-                        //si se pulsa cancelar, se cierra la ventana.
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context, false);
-                          },
-                          child: Text('Cancelar'),
-                          ),
-
-                        //si pulsa borrar, devolvemos true para borrar.
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context, true);
-                          },
-                          child: Text('Borrar'),
-                          ),
-                        ],
-                      );
-                  },
-                  );
-
-                //si se ha cancelado la ventana no se hace nada.
-                if(confirmar != true) {
-                  return;
-                }
-
-                //esperamos a que se borren los datos.
-                await widget.preferenciasService.borrarTodosLosDatos();
-
-                //comprobamos que la pantalla sigue abierta.
-                if(!mounted) {
-                  return;
-                }
-
-                //se vuelve a la bienvenida y elimina las otras pantallas.
-                Navigator.pushAndRemoveUntil(
-                  context, MaterialPageRoute(
-                    builder: (context) => Bienvenida(
-                      prerenciasService: widget.preferenciasService,
-                      ),
-                    ),
-                  (route) => false,
-                  );
-              },
-              child: Text('Borrar todos los datos'),
-              ),
-              ),
+          ),
           ],
         ),
-      ),
+
+        //botón para borrar todos los datos de la aplicación.
+        ElevatedButton(
+          onPressed: () async {
+            //mostraremos una confirmación para borrar los datos.
+            bool? confirmar = await showDialog<bool>( //showDialog muestra una ventana encima de la pantalla.
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: Text('¿Borrar todos los datos?'),
+
+                  content: Text('Se eliminarán todos los datos guardados, esta acción no se puede deshacer.',
+                  ),
+                  actions: [
+                    //si se pulsa cancelar, se cierra la ventana.
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, false);
+                      },
+                      child: Text('Cancelar'),
+                    ),
+
+                    //si pulsa borrar, devolvemos true para borrar.
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                      child: Text('Borrar'),
+                    ),
+                  ],
+                );
+              },
+            );
+
+            //si se ha cancelado la ventana no se hace nada.
+            if(confirmar != true) {
+              return;
+            }
+
+            //esperamos a que se borren los datos.
+            await widget.preferenciasService.borrarTodosLosDatos();
+
+            //comprobamos que la pantalla sigue abierta.
+            if(!mounted) {
+              return;
+            }
+
+            //se vuelve a la bienvenida y elimina las otras pantallas.
+            Navigator.pushAndRemoveUntil(
+              context, MaterialPageRoute(
+              builder: (context) => Bienvenida(
+                preferenciasService: widget.preferenciasService,
+              ),
+            ),
+                  (route) => false,
+            );
+          },
+          child: Text('Borrar todos los datos'),
+        ),
+      ],
+    ),
+    ),
+    ],
+    ),
+    ),
     );
   }
 }

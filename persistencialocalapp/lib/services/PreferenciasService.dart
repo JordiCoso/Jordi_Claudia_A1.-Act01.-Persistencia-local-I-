@@ -2,6 +2,8 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
+import '../models/usuario.dart';
+
 class PreferenciasService {
   // variable de clase para no tener que llamar cada vez a GetInstance().
   late SharedPreferences _preferencias;
@@ -31,13 +33,33 @@ class PreferenciasService {
     inicializando.temaOscuro.value = inicializando.obtenerTemaOscuro();
 
     //se recupera el tamaño de la letra.
-    inicializando.tamanoLetra.value = obtenerTamanoLetra();
+    inicializando.tamanoLetra.value = inicializando.obtenerTamanoLetra();
 
     return inicializando;
   }
 
   SharedPreferences getPreferencias() {
     return _preferencias;
+  }
+  bool? getPrimerInicio() {
+    return _preferencias.getBool("primerInicio");
+  }
+
+  void setPrimerInicio(bool valor) {
+    _preferencias.setBool("primerInicio", valor);
+  }
+
+  void guardarUsuario(Usuario usuario) {
+    _preferencias.setString("usuario", usuario.nombre);
+    _preferencias.setInt("numeroHabitos", usuario.numeroHabitos);
+  }
+
+  Usuario cargarUsuario() {
+    String _nombre = _preferencias.getString("usuario") ?? '';
+    int _numeroHabitos = _preferencias.getInt("numeroHabitos") ?? 0;
+    Usuario _usuario = new Usuario(nombre: _nombre, numeroHabitos: _numeroHabitos);
+
+    return _usuario;
   }
 
   //ponemos un nombre con el que identificamos la fecha guardada.
@@ -147,7 +169,7 @@ void registrarApertura() {
   }
 
   //borramos todos los datos guardados en las preferencias.
-  Future<void> borrarTodosLosDatos async() {
+  Future<void> borrarTodosLosDatos() async {
     //esperamos a que se eleminen los datos guardados en SharedPreferences.
     await _preferencias.clear();
   }

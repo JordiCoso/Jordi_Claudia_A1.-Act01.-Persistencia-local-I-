@@ -8,9 +8,6 @@ import 'models/usuario.dart';
 
 Future<void> main() async {
 
-  //preparamos Flutter para utilizar SharedPreferences antes de runApp.
-  WidgetsFlutterBinding.ensureInitialized();
-
   //creamos el servicio de preferencias.
   PreferenciasService _preferenciasService =
       await PreferenciasService.crear();
@@ -40,7 +37,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
     //la aplicacion "escucha" los cambios.
     return ValueListenableBuilder<bool>(
       valueListenable: widget._preferenciasService.temaOscuro,
@@ -49,75 +45,77 @@ class _MyAppState extends State<MyApp> {
         return ValueListenableBuilder<double>(
           valueListenable: widget._preferenciasService.tamanoLetra,
 
-          builder:(context, tamanoLetra, child) {
-            
-    return MaterialApp(
-      title: 'HabitosApp',
+          builder: (context, tamanoLetra, child) {
+            return MaterialApp(
+              title: 'HabitosApp',
 
-      //colores de la aplicación en modo claro.
-      theme: ThemeData(
-        scaffoldBackgroundColor: Color(0xFFF5F7F2),
+              //colores de la aplicación en modo claro.
+              theme: ThemeData(
+                scaffoldBackgroundColor: Color(0xFFF5F7F2),
 
-        colorScheme: ColorScheme.light(
-          primary: Color(0xFF72917C),
-          secondary: Color(0xFFA2BBA8),
-          surface: Color(0xFFFFFFFF),
-        ),
+                colorScheme: ColorScheme.light(
+                  primary: Color(0xFF72917C),
+                  secondary: Color(0xFFA2BBA8),
+                  surface: Color(0xFFFFFFFF),
+                ),
 
-        //colores de la barra superior.
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFFF5F7F2),
-          foregroundColor: Color(0xFF263D32),
-        ),
-      ),
+                //colores de la barra superior.
+                appBarTheme: AppBarTheme(
+                  backgroundColor: Color(0xFFF5F7F2),
+                  foregroundColor: Color(0xFF263D32),
+                ),
+              ),
 
-      //colores de la aplicación en modo oscuro.
-      darkTheme: ThemeData(
-        scaffoldBackgroundColor: Color(0xFF171F1B),
+              //colores de la aplicación en modo oscuro.
+              darkTheme: ThemeData(
+                scaffoldBackgroundColor: Color(0xFF171F1B),
 
-        colorScheme: ColorScheme.dark(
-          primary: Color(0xFFA2BBA8),
-          secondary: Color(0xFF72917C),
-          surface: Color(0xFF28352E),
-        ),
+                colorScheme: ColorScheme.dark(
+                  primary: Color(0xFFA2BBA8),
+                  secondary: Color(0xFF72917C),
+                  surface: Color(0xFF28352E),
+                ),
 
-        //colores de la barra superior en modo oscuro.
-        appBarTheme: AppBarTheme(
-          backgroundColor: Color(0xFF171F1B),
-          foregroundColor: Color(0xFFE9F1EA),
-        ),
-      ),
+                //colores de la barra superior en modo oscuro.
+                appBarTheme: AppBarTheme(
+                  backgroundColor: Color(0xFF171F1B),
+                  foregroundColor: Color(0xFFE9F1EA),
+                ),
+              ),
 
-      //seleccionamos el tema guardado.
-      themeMode: temaOscuro ? ThemeMode.dark : ThemeMode.light,
+              //seleccionamos el tema guardado.
+              themeMode: temaOscuro ? ThemeMode.dark : ThemeMode.light,
 
-      //ahora vamos a aplicar el tamaño de la letra a TODOS los textos
-      builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(tamanoLetra / 14),
-                                                ),
-          child: child!,
-          );
+              //ahora vamos a aplicar el tamaño de la letra a TODOS los textos
+              builder: (context, child) {
+                return MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaler: TextScaler.linear(tamanoLetra / 14),
+                  ),
+                  child: child!,
+                );
+              },
+
+              //comprobamos si el usuario ya se ha registrado.
+              home: comprobarInicio(widget._preferenciasService),
+            );
+          },
+        );
       },
-
-      //comprobamos si el usuario ya se ha registrado.
-      home: comprobarInicio(widget._preferenciasService),
     );
-  },
-          );
-      },
-      );
-}
+  }
 
 //comprobamos si debemos mostrar Bienvenida o Principal.
-Widget comprobarInicio(PreferenciasService _preferenciasService) {
+  Widget comprobarInicio(PreferenciasService _preferenciasService) {
+    //recuperamos los datos del usuario.
+    Usuario _usuario = _preferenciasService.cargarUsuario();
 
-  //recuperamos los datos del usuario.
-  Usuario _usuario = _preferenciasService.cargarUsuario();
-
-  //si no tiene nombre o hábitos, mostramos Bienvenida.
-  //si ya tiene datos guardados, mostramos Principal.
-  return (_usuario.nombre == '' || _usuario.numeroHabitos == 0) ? Bienvenida(preferenciasService: _preferenciasService) : Principal(preferenciasService: _preferenciasService,
-          usuario: _usuario,
-        );
+    //si no tiene nombre o hábitos, mostramos Bienvenida.
+    //si ya tiene datos guardados, mostramos Principal.
+    return (_usuario.nombre == '' || _usuario.numeroHabitos == 0) ? Bienvenida(
+        preferenciasService: _preferenciasService) : Principal(
+      preferenciasService: _preferenciasService,
+      usuario: _usuario,
+    );
+  }
 }

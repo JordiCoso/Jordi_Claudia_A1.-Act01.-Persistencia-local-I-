@@ -69,32 +69,33 @@ class _PrincipalState extends State<Principal> {
                 child: const Text('Gestionar habitos'),
               ),
 
-              SizedBox(height: 24),
+              SizedBox(height: 16),
 
               ElevatedButton(
                 onPressed: () async {
                   bool? temaOscuro = await Navigator.push<bool> (
                     context, MaterialPageRoute(
-                      builder: (context) => PantallaAjustes(preferenciasService: widget._preferenciasService,
-                        ),
-                      ),
-                    );
+                    builder: (context) => PantallaAjustes(preferenciasService: widget._preferenciasService,
+                    ),
+                  ),
+                  );
                 },
                 child: Text('Ajustes'),
+              ),
 
-                SizedBox(height: 24),
+              SizedBox(height: 16),
 
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context, MaterialPageRoute(
-                        builder: (context) => PantallaEstadisticas(preferenciasService: widget._preferenciasService,
-                          ),
-                        ),
-                      );
-                  },
-                  child: Text('Estadísticas'),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context, MaterialPageRoute(
+                    builder: (context) => PantallaEstadisticas(preferenciasService: widget._preferenciasService,
+                    ),
                   ),
+                  );
+                },
+                child: Text('Estadísticas'),
+              ),
             ],
           ),
         ),

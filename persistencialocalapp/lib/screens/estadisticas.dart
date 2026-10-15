@@ -5,8 +5,7 @@ import 'package:persistencialocalapp/services/PreferenciasService.dart';
 class PantallaEstadisticas extends StatefulWidget {
   final PreferenciasService _preferenciasService;
 
-  const PantallaEstadisticas({super.key, required this._preferenciasService,
-                              });
+  const PantallaEstadisticas({super.key, required this._preferenciasService,});
 
   @override
   State<PantallaEstadisticas> createState() => _PantallaEstadisticas();
@@ -124,8 +123,7 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
                   SizedBox(height: 16),
 
-                  //TODO: mostrar aquí las estadísticas reales
-                  //cuando esté implementada la gestión de hábitos.
+                  //TODO: mostrar aquí las estadísticas reales.
                   Center(
                     child: Column(
                       children: [
@@ -182,7 +180,7 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
                       SizedBox(width: 8),
 
-                      Text('Actividad de la aplicación',
+                      Text('Actividad',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -237,7 +235,7 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
                   Row(
                     children: [
                       Icon(
-                        Icons.refresh,
+                        Icons.app_blocking,
                         color: Theme.of(context).colorScheme.primary,
                       ),
 
