@@ -136,8 +136,8 @@ void registrarApertura() {
   }
 
   //borramos todos los datos guardados en las preferencias.
-  void borrarTodosLosDatos() {
-    //eliminamos los datos guardados en SharedPreferences.
-    _preferencias.clear();
+  Future<void> borrarTodosLosDatos async() {
+    //esperamos a que se eleminen los datos guardados en SharedPreferences.
+    await _preferencias.clear();
   }
 }
