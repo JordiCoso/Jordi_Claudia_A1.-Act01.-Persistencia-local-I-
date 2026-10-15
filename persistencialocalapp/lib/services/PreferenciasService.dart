@@ -46,11 +46,11 @@ class PreferenciasService {
     prefs.setString(nombreDatoFecha, fecha);
   }
 
-  //recuperamos la fecha guardada.
+  //recuperamos la fecha de la ultima apertura.
   String? obtenerUltimaApertura() {
 
-    //obtenemos el acceso a las preferencias guardadas.
-    final prefs = _preferencias.getString("obtenerUltimaApertura");
+    //buscamos la fecha
+    return _preferencias.getString(nombreDatoFecha);
   }
 
 //creamos la variable con el nombre para guardar el número de aperturas.
@@ -96,4 +96,42 @@ void registrarApertura() {
   //usamos el método anterior para guardar la fecha.
   guardarUltimaApertura(fecha);
 }
+  //nombre con el que guardaremos el tema oscuro.
+  static const String nombreDatoTema = 'temaOscuro';
+
+  //guardamos si el modo oscuro está activado o no.
+  void guardarTemaOscuro(bool temaOscuro) {
+    _preferencias.setBool(nombreDatoTema, temaOscuro);
+  }
+
+  //recuperamos el modo oscuro guardado.
+  bool obtenerTemaOscuro() {
+    return _preferencias.getBool(nombreDatoTema) ?? false;
+  }
+
+  //nombre con el que guardamos el tamaño de la letra que el usuario ha seleccionado.
+  static const String nombreDatoTamanoLetra = 'tamanoLetra';
+
+  //guardamos el tamaño de letra seleccionado.
+  void guardarTamanoLetra(double tamano) {
+    _preferencias.setDouble(nombreDatoTamanoLetra, tamano);
+  }
+
+  //recuperamos el tamaño de la letra guardado.
+  double obtenerTamanoLetra() {
+    return _preferencias.getDouble(nombreDatoTamanoLetra) ?? 14;
+  }
+
+  //nombre con el que guardamos la opcion para ocultar hábitos.
+  static const String nombreDatoOcultar = 'ocultarCompletados';
+
+  //guardamos si queremos ocultar los hábitos ocmpletados.
+  void guardarOcultarCompletados(bool ocultar) {
+    _preferencias.setBool(nombreDatoOcultar, ocultar);
+  }
+
+  //recuperamos la opción de ocultar hábitos.
+  bool obtenerOcultarCompletados() {
+    return _preferencias.getBool(nombreDatoOcultar) ?? false;
+  }
 }
