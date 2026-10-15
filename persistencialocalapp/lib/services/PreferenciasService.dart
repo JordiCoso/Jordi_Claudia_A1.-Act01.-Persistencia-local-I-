@@ -1,6 +1,8 @@
 import 'package:persistencialocalapp/models/usuario.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../models/habito.dart';
+
 class PreferenciasService {
   // Variable de clase para no tener que llamar cada vez a getInstance().
   late SharedPreferences _preferencias;
@@ -45,8 +47,29 @@ class PreferenciasService {
   Usuario cargarUsuario() {
     String _nombre = _preferencias.getString("usuario") ?? '';
     int _numeroHabitos = _preferencias.getInt("numeroHabitos") ?? 0;
-    Usuario _usuario = new Usuario(nombre: _nombre, numeroHabitos: _numeroHabitos);
+    Usuario _usuario = new Usuario(
+      nombre: _nombre,
+      numeroHabitos: _numeroHabitos,
+    );
 
     return _usuario;
+  }
+
+  void guardarHabitos(List<Habito> listaHabitos) {
+    List<String> jsonHabitos = [];
+    for (Habito habito in listaHabitos) {
+      jsonHabitos.add(habito.toJson());
+    }
+
+    _preferencias.setStringList("habitos", jsonHabitos);
+  }
+
+  List<Habito> cargarHabitos() {
+    List<String> jsonHabitos = _preferencias.getStringList("habitos") ?? [];
+    List<Habito> habitos = [];
+    for (String json in jsonHabitos) {
+      habitos.add(Habito.fromJson(json));
+    }
+    return habitos;
   }
 }

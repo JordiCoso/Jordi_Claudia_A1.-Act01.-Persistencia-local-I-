@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/bienvenida.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
 
+import '../models/habito.dart';
 import '../models/usuario.dart';
 import 'gestiondehabitos.dart';
 
@@ -20,13 +21,7 @@ class Principal extends StatefulWidget {
 }
 
 class _PrincipalState extends State<Principal> {
-  List<String> mylist = [];
-
-  _PrincipalState() {
-    for (int i = 0; i < 5; i++) {
-      mylist.add('item $i');
-    }
-  }
+  late List<Habito> listaHabitos = widget._preferenciasService.cargarHabitos();
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +38,20 @@ class _PrincipalState extends State<Principal> {
                 'Hola ${widget._usuario.nombre}',
                 style: TextStyle(fontSize: 50),
               ),
+              SizedBox(height: 20),
               ListView.builder(
                 shrinkWrap: true,
-                itemCount: mylist.length,
-                prototypeItem: ListTile(title: Text(mylist.first)),
+                itemCount: listaHabitos.length,
                 itemBuilder: (context, index) {
-                  return ListTile(title: Text(mylist[index]));
+                  return ListTile(
+                    title: Text(
+                      '${listaHabitos[index].identificador} ${listaHabitos[index].nombre} ${listaHabitos[index].fechaCompletado}',
+                      style: TextStyle(color: listaHabitos[index].color),
+                    ),
+                  );
                 },
               ),
+              SizedBox(height: 20),
 
               ElevatedButton(
                 onPressed: () {
