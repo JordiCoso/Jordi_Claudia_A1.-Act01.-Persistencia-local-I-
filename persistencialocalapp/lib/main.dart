@@ -40,6 +40,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    //la aplicacion "escucha" los cambios.
+    return ValueListenableBuilder<bool>(
+      valueListenable: widget._preferenciasService.temaOscuro,
+
+      builder: (context, temaOscuro, child) {
+        return ValueListenableBuilder<double>(
+          valueListenable: widget._preferenciasService.tamanoLetra,
+
+          builder:(context, tamanoLetra, child) {
+            
     return MaterialApp(
       title: 'HabitosApp',
 
@@ -80,10 +91,22 @@ class _MyAppState extends State<MyApp> {
       //seleccionamos el tema guardado.
       themeMode: temaOscuro ? ThemeMode.dark : ThemeMode.light,
 
+      //ahora vamos a aplicar el tamaño de la letra a TODOS los textos
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(tamanoLetra / 14),
+                                                ),
+          child: child!,
+          );
+      },
+
       //comprobamos si el usuario ya se ha registrado.
       home: comprobarInicio(widget._preferenciasService),
     );
-  }
+  },
+          );
+      },
+      );
 }
 
 //comprobamos si debemos mostrar Bienvenida o Principal.
