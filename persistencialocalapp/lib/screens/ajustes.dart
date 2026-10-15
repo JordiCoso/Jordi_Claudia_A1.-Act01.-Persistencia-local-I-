@@ -117,22 +117,61 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
             //botón para borrar todos los datos de la aplicación.
             ElevatedButton(
               onPressed: () async {
-                //esperamos a que se eliminen los datos guardados.
+                //mostraremos una confirmación para borrar los datos.
+                bool? confirmar = await showDialog<bool>( //showDialog muestra una ventana encima de la pantalla.
+                  context: context, 
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('¿Borrar todos los datos?'),
+
+                      content: Text('Se eliminarán todos los datos guardados, esta acción no se puede deshacer.',
+                                    ),
+                      actions: [
+                        //si se pulsa cancelar, se cierra la ventana.
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, false);
+                          },
+                          child: Text('Cancelar'),
+                          ),
+
+                        //si pulsa borrar, devolvemos true para borrar.
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, true);
+                          },
+                          child: Text('Borrar'),
+                          ),
+                        ],
+                      );
+                  },
+                  );
+
+                //si se ha cancelado la ventana no se hace nada.
+                if(confirmar != true) {
+                  return;
+                }
+
+                //esperamos a que se borren los datos.
                 await widget.preferenciasService.borrarTodosLosDatos();
 
-                //comprobamos que la pantalla siga abierta.
-                if(!mounted) return;
+                //comprobamos que la pantalla sigue abierta.
+                if(!mounted) {
+                  return;
+                }
 
-                //volvemos a la pantalla de bienvenida.
+                //se vuelve a la bienvenida y elimina las otras pantallas.
                 Navigator.pushAndRemoveUntil(
                   context, MaterialPageRoute(
-                    builder: (context) => Bienvenida(preferenciasService: widget.preferenciasService,
+                    builder: (context) => Bienvenida(
+                      prerenciasService: widget.preferenciasService,
                       ),
                     ),
-                  (route) => false, //de esta forma se borran las rutas de la pantalla cuando se borran los datos.
+                  (route) => false,
                   );
               },
-              child:Text('Borrar todos los datos'),
+              child: Text('Borrar todos los datos'),
+              ),
               ),
           ],
         ),
