@@ -74,7 +74,8 @@ class _PrincipalState extends State<Principal> {
                 onPressed: () async {
                   bool? temaOscuro = await Navigator.push<bool> (
                     context, MaterialPageRoute(
-                      builder: (context) => PantallaAjustes(),
+                      builder: (context) => PantallaAjustes(preferenciasService: widget._preferenciasService,
+                        ),
                       ),
                     );
                 },
