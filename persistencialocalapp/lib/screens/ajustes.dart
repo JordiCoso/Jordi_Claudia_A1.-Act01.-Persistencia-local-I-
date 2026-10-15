@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PantallaAjustes extends StatefulWidget {
-  const PantallaAjustes({super.key});
+  //recibimos el preferenciasService.
+  final PreferenciasService preferenciasService;
+  
+  const PantallaAjustes({super.key, required this.preferenciasService,});
 
   @override
   State<PantallaAjustes> createState() => _PantallaAjustesState(); //creo el estado de la pantalla.
@@ -12,22 +15,38 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
   bool _ocultarCompletado = false;
   double _tamanoLetra = 14;
 
+  //cargamos los ajustes guardados al abrir la pantalla.
+  @override
+  void initState() {
+    super.initState();
+
+    _temaOscuro = widget.preferenciasService.obtenerTemaOscuro();
+    _tamanoLetra = widget.preferenciasService.obtenerTamanoLetra();
+    _ocultarCompletado = widget.preferenciasService.obtenerOcultarCompletados();
+  }
+
   void _cambiarTemaOscuro(bool nuevoTema) { //cambia el tema.
     setState(() {
       _temaOscuro = nuevoTema;
     });
+
+    widget.preferenciasService.guardarTemaOscuro(nuevoTema); //guardamos el tema.
   }
 
   void _cambiarTamanoLetra(double nuevoTamano) { //cambia el tamaño de la letra.
     setState(() {
       _tamanoLetra = nuevoTamano;
     });
+
+    widget.preferenciasService.guardarTamanoLetra(nuevoTemano); //guardamos el tamaño.
   }
 
   void _cambiarOcultarCompletado(bool nuevoHabitoCompletado) { //cambia la opción de ocultar hábitos.
     setState(() {
       _ocultarCompletado = nuevoHabitoCompletado;
     });
+
+    widget.preferenciasService.guardarOcultarCompletados(nuevoHabitoCompletado); //guardamos ocultar hábitos.
   }
 
   @override
