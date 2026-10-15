@@ -41,6 +41,15 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
 
         child: Column(
           children: [
+
+            //creamos botón para volver y devolver el valor del modo oscuro.
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context, _temaOscuro);
+              },
+              ),
+            
             Text('Configuración',
             style: TextStyle(
               fontSize: 20,
@@ -49,7 +58,6 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
             ),
 
             SizedBox(height: 24),
-
 
             SwitchListTile( //hacemos el interrumptor para el modo oscuro.
             title: Text('Modo oscuro'),
