@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
 
 class PantallaEstadisticas extends StatefulWidget {
@@ -17,9 +16,6 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
   //agregamos vairable de número de aperturas.
   int numeroApertura = 0;
-
-  //indicamos el formato de fecha.
-  DateFormat formato = DateFormat('dd-MM-yyyy HH:mm:ss');
 
   //creamos un método que se ejecuta cuando se crea la pantalla.
   @override
@@ -93,6 +89,11 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
             //mostramos la fecha de la última apertura recuperada del SharedPreferences.
             Text('Última apertura de la aplicación: $ultimaApertura'),
+
+            SizedBox(height: 16),
+
+            //mostramos el total de aperturas de la app.
+            Text('Número de aperturas de la aplicación'),
           ],
         ),
       ),
