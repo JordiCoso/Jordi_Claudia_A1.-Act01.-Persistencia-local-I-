@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/bienvenida.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
 import 'package:persistencialocalapp/screens/ajustes.dart';
+import 'package:persistencialocalapp/screens/estadisticas.dart';
 
 import '../models/usuario.dart';
 import 'gestiondehabitos.dart';
@@ -80,6 +81,20 @@ class _PrincipalState extends State<Principal> {
                     );
                 },
                 child: Text('Ajustes'),
+
+                SizedBox(height: 24),
+
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context, MaterialPageRoute(
+                        builder: (context) => PantallaEstadisticas(preferenciasService: widget._preferenciasService,
+                          ),
+                        ),
+                      );
+                  },
+                  child: Text('Estadísticas'),
+                  ),
             ],
           ),
         ),
