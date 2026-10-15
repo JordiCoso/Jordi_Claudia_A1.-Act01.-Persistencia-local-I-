@@ -52,11 +52,6 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
     //obtenemos el contador de SharedPreferences.
     int numero = _preferenciasService.obtenerNumeroAperturas();
 
-    //comprobamos que la pantalla siga abierta.
-    if (!mounted) {
-      return;
-    }
-
     //actualizamos el número que aparece en pantalla.
     setState(() {
       numeroApertura = numero;

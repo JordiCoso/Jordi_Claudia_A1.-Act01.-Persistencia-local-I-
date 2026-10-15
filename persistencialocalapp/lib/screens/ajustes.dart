@@ -264,11 +264,6 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
             //esperamos a que se borren los datos.
             await widget.preferenciasService.borrarTodosLosDatos();
 
-            //comprobamos que la pantalla sigue abierta.
-            if(!mounted) {
-              return;
-            }
-
             //se vuelve a la bienvenida y elimina las otras pantallas.
             Navigator.pushAndRemoveUntil(
               context, MaterialPageRoute(
