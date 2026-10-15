@@ -30,6 +30,9 @@ class PreferenciasService {
     //se recupera el tema guardado cuando se inicia la app.
     inicializando.temaOscuro.value = inicializando.obtenerTemaOscuro();
 
+    //se recupera el tamaño de la letra.
+    inicializando.tamanoLetra.value = obtenerTamanoLetra();
+
     return inicializando;
   }
 
@@ -118,8 +121,11 @@ void registrarApertura() {
   static const String nombreDatoTamanoLetra = 'tamanoLetra';
 
   //guardamos el tamaño de letra seleccionado.
-  void guardarTamanoLetra(double tamano) {
-    _preferencias.setDouble(nombreDatoTamanoLetra, tamano);
+  void guardarTamanoLetra(double nuevoTamano) {
+    _preferencias.setDouble(nombreDatoTamanoLetra, nuevoTamano);
+
+    //se avisa a la app que se ha cambiado el tamaño.
+    tamanoLetra.value = nuevoTamano;
   }
 
   //recuperamos el tamaño de la letra guardado.
@@ -148,4 +154,7 @@ void registrarApertura() {
 
   //guarda el modo oscuro y avisa cuando cambia.
   ValueNotifier<bool> temaOscuro = ValueNotifier<bool>(false);
+  
+  //guarda el tamaño de letra y avisa cuando cambia.
+  ValueNotifier<double> tamanoLetra = ValueNotifier<double>(14);  
 }
