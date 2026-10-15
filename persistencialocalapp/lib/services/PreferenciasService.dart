@@ -134,4 +134,10 @@ void registrarApertura() {
   bool obtenerOcultarCompletados() {
     return _preferencias.getBool(nombreDatoOcultar) ?? false;
   }
+
+  //borramos todos los datos guardados en las preferencias.
+  void borrarTodosLosDatos() {
+    //eliminamos los datos guardados en SharedPreferences.
+    _preferencias.clear();
+  }
 }
