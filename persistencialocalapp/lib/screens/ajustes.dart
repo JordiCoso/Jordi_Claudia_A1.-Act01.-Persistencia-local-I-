@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistencialocalapp/screens/bienvenida.dart';
 
 class PantallaAjustes extends StatefulWidget {
   //recibimos el preferenciasService.
@@ -110,6 +111,29 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
               value: _ocultarCompletado,
               onChanged: _cambiarOcultarCompletado,
             ),
+
+            SizedBox(height: 24),
+
+            //botón para borrar todos los datos de la aplicación.
+            ElevatedButton(
+              onPressed: () async {
+                //esperamos a que se eliminen los datos guardados.
+                await widget.preferenciasService.borrarTodosLosDatos();
+
+                //comprobamos que la pantalla siga abierta.
+                if(!mounted) return;
+
+                //volvemos a la pantalla de bienvenida.
+                Navigator.pushAndRemoveUntil(
+                  context, MaterialPageRoute(
+                    builder: (context) => Bienvenida(preferenciasService: widget.preferenciasService,
+                      ),
+                    ),
+                  (route) => false, //de esta forma se borran las rutas de la pantalla cuando se borran los datos.
+                  );
+              },
+              child:Text('Borrar todos los datos'),
+              ),
           ],
         ),
       ),
