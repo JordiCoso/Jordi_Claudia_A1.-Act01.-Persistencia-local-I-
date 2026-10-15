@@ -1,76 +1,111 @@
+
 import 'package:flutter/material.dart';
-import 'package:persistencialocalapp/screens/ajustes.dart';
-import 'package:persistencialocalapp/screens/estadisticas.dart';
+import 'package:persistencialocalapp/screens/bienvenida.dart';
+import 'package:persistencialocalapp/screens/principal.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
+
+import 'models/usuario.dart';
 
 Future<void> main() async {
 
-  //preparamos flutter para utilizar las preferencias.
+  //preparamos Flutter para utilizar SharedPreferences antes de runApp.
   WidgetsFlutterBinding.ensureInitialized();
 
-  //creamos un objeto de nuestro servicio.
-  PreferenciasService _preferenciasService = await PreferenciasService.crear();
+  //creamos el servicio de preferencias.
+  PreferenciasService _preferenciasService =
+      await PreferenciasService.crear();
 
-  //aumentamos el número de aperturas.
+  //aumentamos el número de veces que se abre la aplicación.
   _preferenciasService.aumentarNumeroAperturar();
 
-  //guardamos la fecha de apertura.
+  //guardamos la fecha y hora de la última apertura.
   _preferenciasService.registrarApertura();
 
+  //iniciamos la aplicación con el servicio de preferencias.
   runApp(MyApp(preferenciasService: _preferenciasService));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+  //servicio que utilizamos para recuperar las preferencias.
   final PreferenciasService _preferenciasService;
-  const MyApp({super.key, required this._preferenciasService});
+
+  const MyApp({super.key, required this._preferenciasService,});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  //variable que indica si está activado el modo oscuro.
+  bool _temaOscuro = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //recuperamos el modo oscuro que había guardado el usuario.
+    _temaOscuro = widget._preferenciasService.obtenerTemaOscuro();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'HabitosApp',
-      home: PantallaInicio(preferenciasService: _preferenciasService,),
+    return MaterialApp(
+      title: 'HabitosApp',
+
+      //colores de la aplicación en modo claro.
+      theme: ThemeData(
+        scaffoldBackgroundColor: Color(0xFFF5F7F2),
+
+        colorScheme: ColorScheme.light(
+          primary: Color(0xFF72917C),
+          secondary: Color(0xFFA2BBA8),
+          surface: Color(0xFFFFFFFF),
+        ),
+
+        //colores de la barra superior.
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFFF5F7F2),
+          foregroundColor: Color(0xFF263D32),
+        ),
+      ),
+
+      //colores de la aplicación en modo oscuro.
+      darkTheme: ThemeData(
+        scaffoldBackgroundColor: Color(0xFF171F1B),
+
+        colorScheme: ColorScheme.dark(
+          primary: Color(0xFFA2BBA8),
+          secondary: Color(0xFF72917C),
+          surface: Color(0xFF28352E),
+        ),
+
+        //colores de la barra superior en modo oscuro.
+        appBarTheme: AppBarTheme(
+          backgroundColor: Color(0xFF171F1B),
+          foregroundColor: Color(0xFFE9F1EA),
+        ),
+      ),
+
+      //seleccionamos el tema según las preferencias guardadas.
+      themeMode: _temaOscuro ? ThemeMode.dark : ThemeMode.light,
+
+      //comprobamos si el usuario ya se ha registrado.
+      home: comprobarInicio(widget._preferenciasService),
     );
   }
 }
 
-//pantalla principal de prueba.
-class PantallaInicio extends StatelessWidget {
-  final PreferenciasService _preferenciasService;
-  const PantallaInicio({super.key, required this._preferenciasService});
+//comprobamos si debemos mostrar Bienvenida o Principal.
+Widget comprobarInicio(PreferenciasService _preferenciasService) {
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('HabitosApp'),
-      ),
+  //recuperamos los datos del usuario.
+  Usuario _usuario = _preferenciasService.cargarUsuario();
 
-      body: Center(
-        child: Column(
-          children: [
-
-            //botón para estadísticas.
-            ElevatedButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaEstadisticas(preferenciasService: _preferenciasService,),
-              ),
-              );
-            },
-              child: Text('Estadísticas'),
-            ),
-
-            SizedBox(height: 24),
-
-            //botón ajustes.
-            ElevatedButton(onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaAjustes(),
-              ),
-              );
-            },
-
-              child: Text('Ajustes'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  //si no tiene nombre o hábitos, mostramos Bienvenida.
+  //si ya tiene datos guardados, mostramos Principal.
+  return (_usuario.nombre == '' || _usuario.numeroHabitos == 0) ? Bienvenida(preferenciasService: _preferenciasService) : Principal(preferenciasService: _preferenciasService,
+          usuario: _usuario,
+        );
 }
