@@ -30,7 +30,7 @@ class _BienvenidaState extends State<Bienvenida> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Bienvenido a HabitApp')),
+      appBar: AppBar(title: const Text('Bienvenido a HabitosApp')),
       body: Center(
         child: Column(
           children: [
