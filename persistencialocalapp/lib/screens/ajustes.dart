@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/screens/bienvenida.dart';
+import 'package:persistencialocalapp/services/PreferenciasService.dart';
 
 class PantallaAjustes extends StatefulWidget {
   //recibimos el preferenciasService.
@@ -60,15 +61,16 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
         padding: EdgeInsets.all(24),
 
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            //creamos botón para volver y devolver el valor del modo oscuro.
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context, _temaOscuro);
-              },
-              ),
+            Text('Ajustes de personalización',
+                 style: TextStyle(
+                   fontSize: 24,
+                   fontWeight: FontWeight.bold,
+                   ),
+                 ),
+            SizedBox(height: 8),
             
             Text('Configuración',
             style: TextStyle(
@@ -77,42 +79,149 @@ class _PantallaAjustesState extends State<PantallaAjustes> {
             ),
             ),
 
-            SizedBox(height: 24),
+            //tarjeta de apariencia.
+            Container(
+              padding: EdgeInsets.all(16),
 
-            SwitchListTile( //hacemos el interrumptor para el modo oscuro.
-            title: Text('Modo oscuro'),
-              value: _temaOscuro,
-              onChanged: _cambiarTemaOscuro,
-            ),
-
-            SizedBox(height: 24),
-
-            Text('Tamaño de la letra: ${_tamanoLetra.round()}'),
-            Slider( //la barra deslizante para el tamaño.
-            value: _tamanoLetra,
-              min: 10,
-              max: 26,
-              divisions: 16, //divide el intervalo de la barra en 16.
-              onChanged: _cambiarTamanoLetra,
-            ),
-
-            SizedBox(height: 24),
-
-            //ponemos un texto de ejemplo para comprobar el tamaño de la letra.
-            Text('Así se verá con el tamaño de letra seleccionado.',
-              style: TextStyle(fontSize: _tamanoLetra),
-            ),
-
-            SizedBox(height: 24),
-
-            SwitchListTile(
-              title: Text('Hábito completado por hoy',
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(16),
               ),
-              value: _ocultarCompletado,
-              onChanged: _cambiarOcultarCompletado,
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  //título de la sección
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.palette,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+
+                      SizedBox(width: 8),
+
+                      Text(
+                        'Apariencia',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Divider(),
+
+                  //interruptor del modo oscuro.
+                  SwitchListTile(
+                    title: Text('Modo oscuro'),
+                    subtitle: Text('Cambia a modo oscuro o modo claro'),
+                    value: _temaOscuro,
+                    onChanged: _cambiarTemaOscuro,
+                  ),
+
+                  Divider(),
+
+                  Text('Tamaño de letra: ${_tamanoLetra.round()}',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+
+                  //barra para seleccionar el tamaño de letra.
+                  Slider(
+                    value: _tamanoLetra,
+                    min: 10,
+                    max: 26,
+                    divisions: 16,
+                    onChanged: _cambiarTamanoLetra,
+                  ),
+
+                  //texto de ejemplo con el tamaño seleccionado.
+                  Text('Así se verá el tamaño de la letra.',
+                    style: TextStyle(fontSize: _tamanoLetra),
+                  ),
+                ],
+              ),
             ),
 
-            SizedBox(height: 24),
+            SizedBox(height: 20),
+
+            //tarjeta de configuración de hábitos.
+            Container(
+              padding: EdgeInsets.all(16),
+
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(16),
+              ),
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.check_circle_outline,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+
+                      SizedBox(width: 8),
+
+                      Text(
+                        'Hábitos',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Divider(),
+
+                  //interruptor para ocultar hábitos completados.
+                  SwitchListTile(
+                    title: Text('Ocultar completados'),
+                    subtitle: Text('Ocultar los hábitos terminados'),
+                    value: _ocultarCompletado,
+                    onChanged: _cambiarOcultarCompletado,
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            //tarjeta para borrar los datos.
+            Container(
+              padding: EdgeInsets.all(16),
+
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: BorderRadius.circular(16),
+              ),
+
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.delete_outline,
+                        color: Colors.red,
+                      ),
+
+                      SizedBox(width: 8),
+
+                      Text('Datos de la aplicación',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
 
             //botón para borrar todos los datos de la aplicación.
             ElevatedButton(
