@@ -60,7 +60,7 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                     margin: EdgeInsets.only(bottom: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
+                      children: [
                         Expanded(
                           child: TextField(
                             controller: _darControllador(index),
@@ -78,7 +78,7 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                             },
                           ),
                         ),
-
+                        SizedBox(width: 10),
                         ElevatedButton(
                           child: Text('Edit'),
                           onPressed: () {
@@ -87,6 +87,7 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                             });
                           },
                         ),
+                        SizedBox(width: 10),
                         ElevatedButton(
                           child: Text('Remove'),
                           onPressed: () {
@@ -102,6 +103,7 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                   );
                 },
               ),
+              SizedBox(height: 20),
               ElevatedButton(
                 child: Text('Crear'),
                 onPressed: () {
@@ -117,6 +119,7 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                   });
                 },
               ),
+              SizedBox(height: 30),
               ElevatedButton(
                 child: Text('Guardar'),
                 onPressed: () {

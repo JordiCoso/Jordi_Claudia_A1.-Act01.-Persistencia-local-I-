@@ -8,12 +8,9 @@ class Habito {
   late Color color;
   late DateTime fechaCompletado;
 
-  List<double> _colorJsonable = [];
-
   Habito(this.identificador, this.nombre, this.color, this.fechaCompletado);
 
   Habito.fromJson(String json) {
-    print(json);
     final data = jsonDecode(json);
 
     identificador = data['identificador'];
@@ -29,18 +26,26 @@ class Habito {
   }
 
   String toJson() {
-    _colorJsonable.add(color.a);
-    _colorJsonable.add(color.r);
-    _colorJsonable.add(color.g);
-    _colorJsonable.add(color.b);
+    final colorJsonable = _convertirAJsonCompatible();
 
     final data = {
       'identificador': identificador,
       'nombre': nombre,
-      'color': _colorJsonable,
+      'color': colorJsonable,
       'fechaCompletado': fechaCompletado.toString(),
     };
 
     return jsonEncode(data);
+  }
+
+  List<double> _convertirAJsonCompatible() {
+    List<double> colorJsonable = [];
+    
+    colorJsonable.add(color.a);
+    colorJsonable.add(color.r);
+    colorJsonable.add(color.g);
+    colorJsonable.add(color.b);
+
+    return colorJsonable;
   }
 }

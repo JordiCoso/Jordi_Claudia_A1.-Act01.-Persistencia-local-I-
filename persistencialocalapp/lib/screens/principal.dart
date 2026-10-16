@@ -43,10 +43,22 @@ class _PrincipalState extends State<Principal> {
                 shrinkWrap: true,
                 itemCount: listaHabitos.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      '${listaHabitos[index].identificador} ${listaHabitos[index].nombre} ${listaHabitos[index].fechaCompletado}',
-                      style: TextStyle(color: listaHabitos[index].color),
+                  return Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    margin: EdgeInsets.only(bottom: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Checkbox(value: false, onChanged: null),
+
+                        Text(
+                          softWrap: true,
+                          '${listaHabitos[index].identificador} ${listaHabitos[index].nombre} ${listaHabitos[index].fechaCompletado}',
+                          style: TextStyle(color: listaHabitos[index].color),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   );
                 },
