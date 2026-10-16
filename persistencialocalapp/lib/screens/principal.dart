@@ -54,17 +54,7 @@ class _PrincipalState extends State<Principal> {
               SizedBox(height: 20),
 
               ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                      builder: (context) => Gestiondehabitos(
-                        preferenciasService: widget._preferenciasService,
-                        usuario: widget._usuario,
-                      ),
-                    ),
-                  );
-                },
+                onPressed: _abrirEditor,
                 child: const Text('Gestionar habitos'),
               ),
             ],
@@ -72,5 +62,21 @@ class _PrincipalState extends State<Principal> {
         ),
       ),
     );
+  }
+
+  Future<void> _abrirEditor() async {
+    await Navigator.push<bool>(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (context) => Gestiondehabitos(
+          preferenciasService: widget._preferenciasService,
+          usuario: widget._usuario,
+        ),
+      ),
+    );
+
+    setState(() {
+      listaHabitos = widget._preferenciasService.cargarHabitos();
+    });
   }
 }

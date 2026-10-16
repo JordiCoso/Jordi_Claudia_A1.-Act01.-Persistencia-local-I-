@@ -68,6 +68,12 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                             onEditingComplete: () {
                               setState(() {
                                 editables[index] = !editables[index]!;
+                                listaHabitos[index] = new Habito(
+                                  index,
+                                  textEditingControllers[index]?.text ?? '',
+                                  Color(0xFF0000FF),
+                                  new DateTime(0),
+                                ); // TODO color y fecha?
                               });
                             },
                           ),
@@ -100,8 +106,21 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                 child: Text('Crear'),
                 onPressed: () {
                   setState(() {
-                    listaHabitos.add(''); // TODO lista separada o null??
+                    listaHabitos.add(
+                      Habito(
+                        listaHabitos.length,
+                        'Habito nuevo #${listaHabitos.length}',
+                        Color(0xFF0000FF),
+                        DateTime(0),
+                      ),
+                    );
                   });
+                },
+              ),
+              ElevatedButton(
+                child: Text('Guardar'),
+                onPressed: () {
+                  widget._preferenciasService.guardarHabitos(listaHabitos);
                 },
               ),
             ],
@@ -115,13 +134,13 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
     TextEditingController controllador =
         textEditingControllers[index] ?? TextEditingController();
 
-    textEditingControllers[index] = controllador;
+    controllador.text = listaHabitos[index].nombre;
 
+    textEditingControllers[index] = controllador;
     return controllador;
   }
 
   bool _darEditable(int index) {
-
     bool editable = editables[index] ?? false;
 
     editables[index] = editable;
