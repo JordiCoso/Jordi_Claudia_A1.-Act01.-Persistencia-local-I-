@@ -65,9 +65,9 @@ class _PrincipalState extends State<Principal> {
   }
 
   Future<void> _abrirGestionHabitos() async {
-    await Navigator.push<bool>(
+    await Navigator.push<void>(
       context,
-      MaterialPageRoute<bool>(
+      MaterialPageRoute<void>(
         builder: (context) => Gestiondehabitos(
           preferenciasService: widget._preferenciasService,
           usuario: widget._usuario,
