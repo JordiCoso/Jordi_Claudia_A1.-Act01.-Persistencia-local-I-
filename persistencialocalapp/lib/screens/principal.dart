@@ -54,7 +54,7 @@ class _PrincipalState extends State<Principal> {
               SizedBox(height: 20),
 
               ElevatedButton(
-                onPressed: _abrirEditor,
+                onPressed: _abrirGestionHabitos,
                 child: const Text('Gestionar habitos'),
               ),
             ],
@@ -64,7 +64,7 @@ class _PrincipalState extends State<Principal> {
     );
   }
 
-  Future<void> _abrirEditor() async {
+  Future<void> _abrirGestionHabitos() async {
     await Navigator.push<bool>(
       context,
       MaterialPageRoute<bool>(
