@@ -4,6 +4,8 @@ import 'package:persistencialocalapp/services/PreferenciasService.dart';
 
 import '../models/habito.dart';
 import '../models/usuario.dart';
+import 'ajustes.dart';
+import 'estadisticas.dart';
 import 'gestiondehabitos.dart';
 
 class Principal extends StatefulWidget {
@@ -73,6 +75,34 @@ class _PrincipalState extends State<Principal> {
               ElevatedButton(
                 onPressed: _abrirGestionHabitos,
                 child: const Text('Gestionar habitos'),
+              ),
+
+              SizedBox(height: 16),
+
+              ElevatedButton(
+                onPressed: () async {
+                  bool? temaOscuro = await Navigator.push<bool> (
+                    context, MaterialPageRoute(
+                    builder: (context) => PantallaAjustes(preferenciasService: widget._preferenciasService,
+                    ),
+                  ),
+                  );
+                },
+                child: Text('Ajustes'),
+              ),
+
+              SizedBox(height: 16),
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context, MaterialPageRoute(
+                    builder: (context) => PantallaEstadisticas(preferenciasService: widget._preferenciasService,
+                    ),
+                  ),
+                  );
+                },
+                child: Text('Estadísticas'),
               ),
             ],
           ),

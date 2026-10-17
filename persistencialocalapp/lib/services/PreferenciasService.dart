@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 
+import '../models/habito.dart';
 import '../models/usuario.dart';
 
 class PreferenciasService {
@@ -60,6 +61,23 @@ class PreferenciasService {
     Usuario _usuario = new Usuario(nombre: _nombre, numeroHabitos: _numeroHabitos);
 
     return _usuario;
+  }
+  void guardarHabitos(List<Habito> listaHabitos) {
+    List<String> jsonHabitos = [];
+    for (Habito habito in listaHabitos) {
+      jsonHabitos.add(habito.toJson());
+    }
+
+    _preferencias.setStringList("habitos", jsonHabitos);
+  }
+
+  List<Habito> cargarHabitos() {
+    List<String> jsonHabitos = _preferencias.getStringList("habitos") ?? [];
+    List<Habito> habitos = [];
+    for (String json in jsonHabitos) {
+      habitos.add(Habito.fromJson(json));
+    }
+    return habitos;
   }
 
   //ponemos un nombre con el que identificamos la fecha guardada.
