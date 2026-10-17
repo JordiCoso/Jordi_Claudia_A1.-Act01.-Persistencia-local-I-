@@ -8,6 +8,7 @@ class Habito {
   late Color color;
   late DateTime fechaCompletado;
   bool completado = false;
+  int rachaActual = 0;
 
   Habito(this.identificador, this.nombre, this.color, this.fechaCompletado);
 
@@ -26,6 +27,7 @@ class Habito {
     fechaCompletado = DateTime.parse(data['fechaCompletado']);
 
     completado = data['completado'];
+    rachaActual = data['rachaActual'] ?? 0;
   }
 
   String toJson() {
@@ -37,6 +39,7 @@ class Habito {
       'color': colorJsonable,
       'fechaCompletado': fechaCompletado.toString(),
       'completado': completado,
+      'rachaActual' : rachaActual,
     };
 
     return jsonEncode(data);
@@ -51,5 +54,26 @@ class Habito {
     colorJsonable.add(color.b);
 
     return colorJsonable;
+  }
+
+  void actualizarRacha() {
+    DateTime hoy = DateTime.now();
+
+    //comprobamos si se ha completado hoy
+    if(fechaCompletado.year == hoy.year && fechaCompletado.month == hoy.month && fechaCompletado.day == hoy.day) {
+      return;
+    }
+
+    //creamos variable para la fecha de ayer para hacer la comprobacion
+    DateTime ayer = DateTime(hoy.year, hoy.month, hoy.day - 1);
+
+    //comprobamos tambien si se completó ayer
+    if(fechaCompletado.year == ayer.year && fechaCompletado.month == ayer.month && fechaCompletado.day == ayer.day) {
+      rachaActual++;
+    } else {
+      rachaActual = 1; //si no se completó el dia anterior se crea una racha nueva.
+    }
+
+    fechaCompletado = hoy; //actualizamos para que quede la ultima fecha.
   }
 }
