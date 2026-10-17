@@ -41,6 +41,11 @@ class _PrincipalState extends State<Principal> {
                 style: TextStyle(fontSize: 50),
               ),
               SizedBox(height: 20),
+              Text(
+                'Has completado ${_contarHabitosCompletados()} de ${widget._usuario.numeroHabitos} habitos',
+                style: TextStyle(fontSize: 30),
+              ),
+              SizedBox(height: 20),
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: listaHabitos.length,
@@ -145,5 +150,14 @@ class _PrincipalState extends State<Principal> {
 
       widget._preferenciasService.guardarHabitos(listaHabitos);
     });
+  }
+
+  int _contarHabitosCompletados() {
+    int contadorCompletados = 0;
+
+    for (Habito habito in listaHabitos) {
+      if (habito.completado) contadorCompletados++;
+    }
+    return contadorCompletados;
   }
 }
