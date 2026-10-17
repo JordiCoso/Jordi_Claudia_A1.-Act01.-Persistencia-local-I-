@@ -145,6 +145,7 @@ class _PrincipalState extends State<Principal> {
         return;
       }
 
+      habito.actualizarRacha();
       habito.fechaCompletado = DateTime.now();
       habito.completado = true;
 

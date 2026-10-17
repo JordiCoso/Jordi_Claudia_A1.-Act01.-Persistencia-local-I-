@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:persistencialocalapp/services/PreferenciasService.dart';
+import 'package:persistencialocalapp/models/habito.dart';
 
 class PantallaEstadisticas extends StatefulWidget {
   final PreferenciasService _preferenciasService;
@@ -19,6 +20,9 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
   //variable para guardar el número de aperturas.
   int numeroApertura = 0;
 
+  //lista de habitos guardados,
+  List<Habito> listaHabitos = [];
+
   //método que se ejecuta cuando se crea la pantalla.
   @override
   void initState() {
@@ -27,6 +31,7 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
     //recuperamos las estadísticas de la aplicación.
     cargarUltimaApertura(widget._preferenciasService);
     cargarNumeroAperturas(widget._preferenciasService);
+    listaHabitos = widget._preferenciasService.cargarHabitos();
   }
 
   //recuperamos la última apertura de la aplicación.
@@ -119,31 +124,32 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
                   SizedBox(height: 16),
 
                   //TODO: mostrar aquí las estadísticas reales.
-                  Center(
-                    child: Column(
+                  if(listaHabitos.isEmpty)
+                    Center(
+                      child: Text('Todavía no has empezado ningún hábito.'),
+                    )
+                  else
+                    Column(
                       children: [
-                        Icon(
-                          Icons.eco_outlined,
-                          size: 48,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-
-                        SizedBox(height: 12),
-
-                        Text('Aquí se mostrará tu progreso.',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                        for (Habito habito in listaHabitos)
+                          Padding(padding: EdgeInsets.only(bottom: 12),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(habito.nombre),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('Racha: ${habito.obtenerRacha()} días'),
+                                  Text('Total: ${habito.diasCompletados} días'),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-
-                        SizedBox(height: 8),
-
-                        Text('Cuando registres hábitos, aquí aparecerán sus estadísticas.',
-                          textAlign: TextAlign.center,
-                        ),
+                          ),
                       ],
                     ),
-                  ),
 
                   SizedBox(height: 16),
                 ],

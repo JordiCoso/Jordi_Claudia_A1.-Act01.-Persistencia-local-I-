@@ -9,6 +9,7 @@ class Habito {
   late DateTime fechaCompletado;
   bool completado = false;
   int rachaActual = 0;
+  int diasCompletados = 0;
 
   Habito(this.identificador, this.nombre, this.color, this.fechaCompletado);
 
@@ -28,6 +29,7 @@ class Habito {
 
     completado = data['completado'];
     rachaActual = data['rachaActual'] ?? 0;
+    diasCompletados = data['diasCompletados'] ?? 0;
   }
 
   String toJson() {
@@ -40,6 +42,7 @@ class Habito {
       'fechaCompletado': fechaCompletado.toString(),
       'completado': completado,
       'rachaActual' : rachaActual,
+      'diasCompletados': diasCompletados,
     };
 
     return jsonEncode(data);
@@ -64,6 +67,8 @@ class Habito {
       return;
     }
 
+    diasCompletados++;
+
     //creamos variable para la fecha de ayer para hacer la comprobacion
     DateTime ayer = DateTime(hoy.year, hoy.month, hoy.day - 1);
 
@@ -75,5 +80,16 @@ class Habito {
     }
 
     fechaCompletado = hoy; //actualizamos para que quede la ultima fecha.
+  }
+
+  int obtenerRacha() {
+    DateTime hoy = DateTime.now();
+    DateTime ayer = DateTime(hoy.year, hoy.month, hoy.day - 1);
+
+    if((fechaCompletado.year == hoy.year && fechaCompletado.month == hoy.month && fechaCompletado.day == hoy.day) ||
+        (fechaCompletado.year == ayer.year && fechaCompletado.month == ayer.month && fechaCompletado.day == ayer.day)) {
+      return rachaActual;
+    }
+    return 0; //si han pasado mas dias, la racha vuelve a 0.
   }
 }
