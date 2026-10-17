@@ -79,6 +79,10 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                                 _editarHabito(index);
                               });
                             },
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            style: TextStyle(color: listaHabitos[index].color),
                           ),
                         ),
                         SizedBox(width: 10),
