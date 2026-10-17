@@ -8,6 +8,8 @@ import 'package:persistencialocalapp/services/PreferenciasService.dart';
 import '../models/habito.dart';
 import '../models/usuario.dart';
 
+enum NombreColores { naranja, azul, verde }
+
 class Gestiondehabitos extends StatefulWidget {
   final PreferenciasService _preferenciasService;
   final Usuario _usuario;
@@ -23,6 +25,12 @@ class Gestiondehabitos extends StatefulWidget {
 }
 
 class _GestiondehabitosState extends State<Gestiondehabitos> {
+  final List<Color> listaColores = [
+    Color(0xFFFFC067),
+    Color(0xFF6CCCC4),
+    Color(0xFF807B44),
+  ];
+
   late List<Habito> listaHabitos = widget._preferenciasService.cargarHabitos();
   Map<int, TextEditingController> textEditingControllers = {};
   Map<int, bool> editables = {};
@@ -77,11 +85,15 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              _cambiarColorHabito(index, Color(0xFFFFC067));
+                              _cambiarColorHabito(
+                                index,
+                                listaColores[NombreColores.naranja.index],
+                              );
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFFFC067),
+                            backgroundColor:
+                                listaColores[NombreColores.naranja.index],
                           ),
                           child: Text(''),
                         ),
@@ -89,11 +101,15 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              _cambiarColorHabito(index, Color(0xFF6CCCC4));
+                              _cambiarColorHabito(
+                                index,
+                                listaColores[NombreColores.azul.index],
+                              );
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF6CCCC4),
+                            backgroundColor:
+                                listaColores[NombreColores.azul.index],
                           ),
                           child: Text(''),
                         ),
@@ -101,11 +117,15 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                         ElevatedButton(
                           onPressed: () {
                             setState(() {
-                              _cambiarColorHabito(index, Color(0xFF807B44));
+                              _cambiarColorHabito(
+                                index,
+                                listaColores[NombreColores.verde.index],
+                              );
                             });
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF807B44),
+                            backgroundColor:
+                                listaColores[NombreColores.verde.index],
                           ),
                           child: Text(''),
                         ),
@@ -144,7 +164,7 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                       Habito(
                         listaHabitos.length,
                         'Habito nuevo #${listaHabitos.length}',
-                        Color(0xFF0000FF),
+                        listaColores[NombreColores.verde.index],
                         DateTime(0),
                       ),
                     );
