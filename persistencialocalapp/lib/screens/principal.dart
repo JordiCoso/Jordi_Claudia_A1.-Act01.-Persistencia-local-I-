@@ -61,7 +61,7 @@ class _PrincipalState extends State<Principal> {
 
                         Text(
                           softWrap: true,
-                          '${listaHabitos[index].identificador} ${listaHabitos[index].nombre} ${listaHabitos[index].fechaCompletado}',
+                          '${listaHabitos[index].identificador} ${listaHabitos[index].nombre} ${listaHabitos[index].completado ? listaHabitos[index].fechaCompletado : ''}',
                           style: TextStyle(color: listaHabitos[index].color),
                           textAlign: TextAlign.center,
                         ),
@@ -81,11 +81,13 @@ class _PrincipalState extends State<Principal> {
 
               ElevatedButton(
                 onPressed: () async {
-                  bool? temaOscuro = await Navigator.push<bool> (
-                    context, MaterialPageRoute(
-                    builder: (context) => PantallaAjustes(preferenciasService: widget._preferenciasService,
+                  bool? temaOscuro = await Navigator.push<bool>(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PantallaAjustes(
+                        preferenciasService: widget._preferenciasService,
+                      ),
                     ),
-                  ),
                   );
                 },
                 child: Text('Ajustes'),
@@ -96,10 +98,12 @@ class _PrincipalState extends State<Principal> {
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                    context, MaterialPageRoute(
-                    builder: (context) => PantallaEstadisticas(preferenciasService: widget._preferenciasService,
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PantallaEstadisticas(
+                        preferenciasService: widget._preferenciasService,
+                      ),
                     ),
-                  ),
                   );
                 },
                 child: Text('Estadísticas'),
