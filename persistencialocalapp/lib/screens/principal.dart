@@ -50,7 +50,12 @@ class _PrincipalState extends State<Principal> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Checkbox(value: false, onChanged: null),
+                        Checkbox(
+                          value: listaHabitos[index].completado,
+                          onChanged: (bool? newValue) {
+                            _completarHabito(newValue, index);
+                          },
+                        ),
 
                         Text(
                           softWrap: true,
@@ -89,6 +94,22 @@ class _PrincipalState extends State<Principal> {
 
     setState(() {
       listaHabitos = widget._preferenciasService.cargarHabitos();
+    });
+  }
+
+  void _completarHabito(bool? newValue, int index) {
+    Habito habito = listaHabitos[index];
+    setState(() {
+      if (newValue == null) return;
+      if (newValue == false) {
+        habito.completado = false;
+        return;
+      }
+
+      habito.fechaCompletado = DateTime.now();
+      habito.completado = true;
+
+      widget._preferenciasService.guardarHabitos(listaHabitos);
     });
   }
 }

@@ -68,15 +68,46 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                             onEditingComplete: () {
                               setState(() {
                                 editables[index] = !editables[index]!;
-                                listaHabitos[index] = new Habito(
-                                  index,
-                                  textEditingControllers[index]?.text ?? '',
-                                  Color(0xFF0000FF),
-                                  new DateTime(0),
-                                ); // TODO color y fecha?
+                                _editarHabito(index);
                               });
                             },
                           ),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _cambiarColorHabito(index, Color(0xFFFFC067));
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFFFFC067),
+                          ),
+                          child: Text(''),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _cambiarColorHabito(index, Color(0xFF6CCCC4));
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF6CCCC4),
+                          ),
+                          child: Text(''),
+                        ),
+                        SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              _cambiarColorHabito(index, Color(0xFF807B44));
+                            });
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF807B44),
+                          ),
+                          child: Text(''),
                         ),
                         SizedBox(width: 10),
                         ElevatedButton(
@@ -84,6 +115,7 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
                           onPressed: () {
                             setState(() {
                               editables[index] = !editables[index]!;
+                              if (!editables[index]!) _editarHabito(index);
                             });
                           },
                         ),
@@ -149,5 +181,17 @@ class _GestiondehabitosState extends State<Gestiondehabitos> {
     editables[index] = editable;
 
     return editable;
+  }
+
+  void _editarHabito(int index) {
+    Habito habito = listaHabitos[index];
+
+    habito.nombre = textEditingControllers[index]?.text ?? '';
+
+    habito = Habito(index, habito.nombre, habito.color, habito.fechaCompletado);
+  }
+
+  void _cambiarColorHabito(int index, Color color) {
+    listaHabitos[index].color = color;
   }
 }
