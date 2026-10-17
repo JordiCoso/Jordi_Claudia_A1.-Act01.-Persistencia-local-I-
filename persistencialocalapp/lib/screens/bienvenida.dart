@@ -50,7 +50,7 @@ class _BienvenidaState extends State<Bienvenida> {
               controller: _numeroController,
               decoration: InputDecoration(
                 labelText: 'Numero habitos',
-                hintText: 'Escribe numero de hábitos diarios',
+                hintText: 'Escribe numero de hàbitos diarios',
                 border: OutlineInputBorder(),
               ),
             ),
