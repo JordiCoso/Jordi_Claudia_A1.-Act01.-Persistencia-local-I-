@@ -9,8 +9,7 @@ import 'models/usuario.dart';
 Future<void> main() async {
 
   //creamos el servicio de preferencias.
-  PreferenciasService _preferenciasService =
-      await PreferenciasService.crear();
+  PreferenciasService _preferenciasService = await PreferenciasService.crear();
 
   //aumentamos el número de veces que se abre la aplicación.
   _preferenciasService.aumentarNumeroAperturar();
