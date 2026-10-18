@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
                   data: MediaQuery.of(context).copyWith(
                     textScaler: TextScaler.linear(tamanoLetra / 14),
                   ),
-                  child: child!,
+                  child: child!, //aquí indicamos que child no es null, poniendo el !
                 );
               },
 
