@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
-import 'package:persistencialocalapp/screens/bienvenida.dart';
-import 'package:persistencialocalapp/screens/principal.dart';
-import 'package:persistencialocalapp/services/PreferenciasService.dart';
+
+import '/screens/bienvenida.dart';
+import '/screens/principal.dart';
+import '/services/PreferenciasService.dart';
 
 import 'models/usuario.dart';
 
 Future<void> main() async {
-
   //creamos el servicio de preferencias.
   PreferenciasService _preferenciasService = await PreferenciasService.crear();
 
@@ -22,18 +21,16 @@ Future<void> main() async {
 }
 
 class MyApp extends StatefulWidget {
-
   //servicio que utilizamos para recuperar las preferencias.
   final PreferenciasService _preferenciasService;
 
-  const MyApp({super.key, required this._preferenciasService,});
+  const MyApp({super.key, required this._preferenciasService});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     //la aplicacion "escucha" los cambios.
@@ -88,9 +85,9 @@ class _MyAppState extends State<MyApp> {
               //ahora vamos a aplicar el tamaño de la letra a TODOS los textos
               builder: (context, child) {
                 return MediaQuery(
-                  data: MediaQuery.of(context).copyWith(
-                    textScaler: TextScaler.linear(tamanoLetra / 14),
-                  ),
+                  data: MediaQuery.of(
+                    context,
+                  ).copyWith(textScaler: TextScaler.linear(tamanoLetra / 14)),
                   child: child!, //aquí indicamos que child no es null, poniendo el !
                 );
               },
@@ -104,17 +101,18 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-//comprobamos si debemos mostrar Bienvenida o Principal.
+  //comprobamos si debemos mostrar Bienvenida o Principal.
   Widget comprobarInicio(PreferenciasService _preferenciasService) {
     //recuperamos los datos del usuario.
     Usuario _usuario = _preferenciasService.cargarUsuario();
 
     //si no tiene nombre o hábitos, mostramos Bienvenida.
     //si ya tiene datos guardados, mostramos Principal.
-    return (_usuario.nombre == '' || _usuario.numeroHabitos == 0) ? Bienvenida(
-        preferenciasService: _preferenciasService) : Principal(
-      preferenciasService: _preferenciasService,
-      usuario: _usuario,
-    );
+    return (_usuario.nombre == '' || _usuario.numeroHabitos == 0)
+        ? Bienvenida(preferenciasService: _preferenciasService)
+        : Principal(
+            preferenciasService: _preferenciasService,
+            usuario: _usuario,
+          );
   }
 }

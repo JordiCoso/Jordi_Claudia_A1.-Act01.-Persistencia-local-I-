@@ -1,11 +1,11 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:persistencialocalapp/models/usuario.dart';
-import 'package:persistencialocalapp/screens/principal.dart';
-import 'package:persistencialocalapp/services/PreferenciasService.dart';
+
+import '/models/usuario.dart';
+import '/screens/principal.dart';
+import '/services/PreferenciasService.dart';
 
 class Bienvenida extends StatefulWidget {
+  // Nos pasan el servicio.
   final PreferenciasService _preferenciasService;
 
   const Bienvenida({super.key, required this._preferenciasService});
@@ -25,6 +25,7 @@ class _BienvenidaState extends State<Bienvenida> {
     super.dispose();
   }
 
+  // Usamos este valor para evitar que pasen sin datos validos
   bool _validoAvanzar = false;
 
   @override
@@ -66,24 +67,39 @@ class _BienvenidaState extends State<Bienvenida> {
   }
 
   void _botonContinuar() {
+    String nombre = _nombreController.text.trim();
+    /* Este parse parece peligroso,
+     * pero si llegas a esta funcion ya ha sido comprobado que es valido.
+     */
+    int numberoHabitos = int.parse(_numeroController.text.trim());
 
-    String _nombre = _nombreController.text.trim();
-    int _numberoHabitos = int.parse(_numeroController.text.trim());
+    final Usuario usuario = new Usuario(
+      nombre: nombre,
+      numeroHabitos: numberoHabitos,
+    );
 
-    final Usuario _usuario = new Usuario(nombre: _nombre, numeroHabitos: _numberoHabitos);
+    widget._preferenciasService.guardarUsuario(usuario);
 
-    widget._preferenciasService.guardarUsuario(_usuario);
-
+    // Despues de guardar el usuario finalmente pasamos a la siguiente pagina.
     Navigator.pushReplacement(
       context,
       MaterialPageRoute<void>(
-        builder: (context) =>
-            Principal(preferenciasService: widget._preferenciasService, usuario: _usuario),
+        builder: (context) => Principal(
+          preferenciasService: widget._preferenciasService,
+          usuario: usuario,
+        ),
       ),
     );
   }
 
+  /* Esto se ejecuta cada vez que cambia el texto.
+   * No necesitamos el string que nos pasa OnChanged
+   * asi que _ significa que es una variable no usada
+   * (gracias Garry's Mod por hacerme aprender lua)
+   * en dart es mas un placeholder que algo no usado pero me sirve.
+   */
   void _validarInput(_) {
+    // Asumimos que no es valido avanzar hasta que se demuestre lo contrario.
     _validoAvanzar = false;
     if (_comprobarNombre()) {
       if (_comprobarNumeroHabitos()) _validoAvanzar = true;
@@ -94,18 +110,20 @@ class _BienvenidaState extends State<Bienvenida> {
 
   bool _comprobarNombre() {
     String? nombre = _nombreController.text.trim();
+    // Si despues de limpiar el texto no queda nada no es valido.
     return nombre == '' ? false : true;
   }
 
   bool _comprobarNumeroHabitos() {
+    // Si sale un error es que no es valido.
     try {
       int numero = int.parse(_numeroController.text.trim());
-
+      // Si sobrevive el parse miramos que sea mayor que 0 habitos
       if (numero > 0) return true;
     } on FormatException {
       return false;
     }
-
+    // No se como se podria saltar el try pero por si acaso asumo que esta mal.
     return false;
   }
 }

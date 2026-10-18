@@ -1,19 +1,18 @@
-
 import 'package:flutter/material.dart';
-import 'package:persistencialocalapp/services/PreferenciasService.dart';
-import 'package:persistencialocalapp/models/habito.dart';
+
+import '/services/PreferenciasService.dart';
+import '/models/habito.dart';
 
 class PantallaEstadisticas extends StatefulWidget {
   final PreferenciasService _preferenciasService;
 
-  const PantallaEstadisticas({super.key, required this._preferenciasService,});
+  const PantallaEstadisticas({super.key, required this._preferenciasService});
 
   @override
   State<PantallaEstadisticas> createState() => _PantallaEstadisticas();
 }
 
 class _PantallaEstadisticas extends State<PantallaEstadisticas> {
-
   //texto que aparece mientras recuperamos la última fecha.
   String ultimaApertura = 'Cargando...';
 
@@ -36,7 +35,6 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
   //recuperamos la última apertura de la aplicación.
   void cargarUltimaApertura(PreferenciasService _preferenciasService) {
-
     //obtenemos la fecha guardada en SharedPreferences.
     String? fecha = _preferenciasService.obtenerUltimaApertura();
 
@@ -53,7 +51,6 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
   //recuperamos el número de aperturas guardado.
   void cargarNumeroAperturas(PreferenciasService _preferenciasService) {
-
     //obtenemos el contador de SharedPreferences.
     int numero = _preferenciasService.obtenerNumeroAperturas();
 
@@ -66,9 +63,7 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Estadísticas'),
-      ),
+      appBar: AppBar(title: Text('Estadísticas')),
 
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
@@ -76,13 +71,10 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             //título principal de la pantalla.
-            Text('Tu progreso',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            Text(
+              'Tu progreso',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
             SizedBox(height: 24),
@@ -99,7 +91,6 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   //título de la sección de hábitos.
                   Row(
                     children: [
@@ -110,7 +101,8 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
                       SizedBox(width: 8),
 
-                      Text('Estadísticas de hábitos',
+                      Text(
+                        'Estadísticas de hábitos',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -124,7 +116,7 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
                   SizedBox(height: 16),
 
                   //TODO: mostrar aquí las estadísticas reales.
-                  if(listaHabitos.isEmpty)
+                  if (listaHabitos.isEmpty)
                     Center(
                       child: Text('Todavía no has empezado ningún hábito.'),
                     )
@@ -132,21 +124,24 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
                     Column(
                       children: [
                         for (Habito habito in listaHabitos)
-                          Padding(padding: EdgeInsets.only(bottom: 12),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(habito.nombre),
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text('Racha: ${habito.obtenerRacha()} días'),
-                                  Text('Total: ${habito.diasCompletados} días'),
-                                ],
-                              ),
-                            ],
-                          ),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 12),
+                            child: Row(
+                              children: [
+                                Expanded(child: Text(habito.nombre)),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'Racha: ${habito.obtenerRacha()} días',
+                                    ),
+                                    Text(
+                                      'Total: ${habito.diasCompletados} días',
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                       ],
                     ),
@@ -170,7 +165,6 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   //título de la sección de actividad.
                   Row(
                     children: [
@@ -181,7 +175,8 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
                       SizedBox(width: 8),
 
-                      Text('Actividad',
+                      Text(
+                        'Actividad',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -216,9 +211,7 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
                             Text(
                               ultimaApertura,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -249,7 +242,8 @@ class _PantallaEstadisticas extends State<PantallaEstadisticas> {
 
                           SizedBox(height: 4),
 
-                          Text('$numeroApertura',
+                          Text(
+                            '$numeroApertura',
                             style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
